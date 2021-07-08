@@ -18,14 +18,14 @@ CURSOR = DATABASE.cursor()
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы не готовы к крутости такого уровня...")
 
-def cmd_openmc(update, context):
+def cmd_selldata(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы открыли мифический сундук")
 
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
 
 start_handler = CommandHandler('start', cmd_start)
-openmc_handler = CommandHandler('openmc', cmd_openmc)
+selldata_handler = CommandHandler('selldata', cmd_selldata)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
