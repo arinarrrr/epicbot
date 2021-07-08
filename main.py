@@ -20,7 +20,8 @@ def cmd_start(update, context):
 
 def cmd_selldata(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы продали свои данные")
-    print(context.user_data);
+    print(update.message.from_user.id);
+    print(update.message.from_user.first_name);
 
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
