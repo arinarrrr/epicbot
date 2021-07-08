@@ -1,13 +1,17 @@
 import os
 import telegram
-import telegram.ext 
+import telegram.ext
+import psycopg2
 
-#3 Токен
+## Токен
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 ## Всякая фигня
 updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
 dispatcher = updater.dispatcher
+
+## Подключение к БД
+DATABASE = psycopg2.connect(dbname='dc9mv72g5rq199', user='expfuoggsoeeqp', password='8be9b873d53b0b38ba8fb3b7a0274db21e934813af12ecf4ed0bdee244422707', host='localhost')
 
 ## Крутые функции
 def cmd_start(update, context):
