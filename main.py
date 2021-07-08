@@ -1,2 +1,4 @@
+import os
 import telegram
-print("Привет, мир!")
+
+print(os.environ.get('BOT_TOKEN'))
