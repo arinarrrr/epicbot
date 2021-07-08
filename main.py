@@ -23,13 +23,15 @@ def cmd_selldata(update, context):
     userName = update.message.from_user.first_name;
     
     CURSOR.execute ("SELECT * FROM users WHERE userid="+str(userId))
+    fetch = CURSOR.fetchone()
     
-    if CURSOR.fetchone() == None:
+    if fetch == None:
         CURSOR.execute ("INSERT INTO users (userid, name, balance) VALUES ("+str(userId)+", '"+userName+"', 3)")
         context.bot.send_message(chat_id=update.effective_chat.id, text="Вы продали свои данные за три фальшивых рубля")
     
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text="Вы уже продавали свои данные")
+        print(fetch)
 
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
