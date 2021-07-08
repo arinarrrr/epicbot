@@ -17,15 +17,16 @@ CURSOR = DATABASE.cursor()
 ## Крутые функции
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы не готовы к крутости такого уровня...")
+    print(context.user_data);
 
 def cmd_selldata(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Вы открыли мифический сундук")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Вы продали свои данные")
 
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
 
 start_handler = CommandHandler('start', cmd_start)
-selldata_handler = CommandHandler('selldata', cmd_selldata)
+selldata_handler = CommandHandler('selldata', cmd_selldata, pass_user_data=True)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
