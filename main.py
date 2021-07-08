@@ -17,10 +17,10 @@ CURSOR = DATABASE.cursor()
 ## Крутые функции
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы не готовы к крутости такого уровня...")
-    print(context.user_data);
 
 def cmd_selldata(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы продали свои данные")
+    print(context.user_data);
 
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
