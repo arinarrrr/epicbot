@@ -29,7 +29,7 @@ selldata_handler = CommandHandler('selldata', cmd_selldata)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
-dispatcher.add_handler(openmc_handler)
+dispatcher.add_handler(selldata_handler)
 
 ## Запускаем бота
 updater.start_polling()
