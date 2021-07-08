@@ -27,6 +27,7 @@ def cmd_selldata(update, context):
     
     if fetch == None:
         CURSOR.execute ("INSERT INTO users (userid, name, balance) VALUES ("+str(userId)+", '"+userName+"', 3)")
+        DATABASE.commit()
         context.bot.send_message(chat_id=update.effective_chat.id, text="Вы продали свои данные за три фальшивых рубля")
     
     else:
