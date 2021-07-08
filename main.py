@@ -52,7 +52,7 @@ from telegram.ext import CommandHandler
 
 start_handler = CommandHandler('start', cmd_start)
 selldata_handler = CommandHandler('selldata', cmd_selldata)
-balance_handler = CommandHandler('selldata', cmd_balance)
+balance_handler = CommandHandler('balance', cmd_balance)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
