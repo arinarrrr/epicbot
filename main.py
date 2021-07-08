@@ -34,15 +34,30 @@ def cmd_selldata(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Вы уже продавали свои данные")
         print(fetch)
 
+def cmd_balance(update, context):
+    userId = update.message.from_user.id;
+    
+    CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(userId))
+    fetch = CURSOR.fetchone()
+    
+    if fetch == None:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Вы ещё не числитесь в наших базах")
+    
+    else:
+        bmsg_balance = str(fetch[0])
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Ваш баланс: "+bmsg_balance+" фальшивых рубля(ей)")
+    
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
 
 start_handler = CommandHandler('start', cmd_start)
-selldata_handler = CommandHandler('selldata', cmd_selldata, pass_user_data=True)
+selldata_handler = CommandHandler('selldata', cmd_selldata)
+balance_handler = CommandHandler('selldata', cmd_balance)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(selldata_handler)
+dispatcher.add_handler(balance_handler)
 
 ## Запускаем бота
 updater.start_polling()
