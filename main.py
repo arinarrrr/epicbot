@@ -11,7 +11,7 @@ updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
 ## Подключение к БД
-DATABASE = psycopg2.connect(dbname='dc9mv72g5rq199', user='expfuoggsoeeqp', password='8be9b873d53b0b38ba8fb3b7a0274db21e934813af12ecf4ed0bdee244422707', host='localhost')
+DATABASE = psycopg2.connect(dbname='dc9mv72g5rq199', user='expfuoggsoeeqp', password='8be9b873d53b0b38ba8fb3b7a0274db21e934813af12ecf4ed0bdee244422707', host='ec2-54-220-170-192.eu-west-1.compute.amazonaws.com')
 CURSOR = DATABASE.cursor()
 
 ## Крутые функции
