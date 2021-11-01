@@ -139,7 +139,7 @@ def cmd_checkshroom(update, context):
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
 
-top_handler = CommandHandler('top', cmd_start)
+top_handler = CommandHandler('top', cmd_top)
 start_handler = CommandHandler('start', cmd_start)
 createshroom_handler = CommandHandler('createshroom', cmd_createshroom)
 checkshroom_handler = CommandHandler('checkshroom', cmd_checkshroom)
