@@ -35,9 +35,10 @@ def shroom_update_cycle():
         size += random.choice([0, 0, 0, 1, 1, 2, 3])
         
         CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
-        DATABASE.commit()
         
         fetch = CURSOR.fetchone()
+    
+    DATABASE.commit()
     
     for timer in RandomCooldown:
         RandomCooldown[timer] -= 5
