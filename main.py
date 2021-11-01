@@ -22,29 +22,31 @@ RandomCooldown = {}
 
 ## Циклы гриба
 def shroom_update_cycle():
-    sleep(300)
-    print("Шаг цикла!")
-    
-    CURSOR.execute ("SELECT * FROM users")
-    
-    fetch = CURSOR.fetchone()
-    while fetch != None:
-        userId = fetch[0]
-        size = fetch[2]
-        
-        size += random.choice([0, 0, 0, 1, 1, 2, 3])
-        
-        CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
-        
+    while True:
+        print("Шаг цикла!")
+
+        CURSOR.execute ("SELECT * FROM users")
+
         fetch = CURSOR.fetchone()
-    
-    DATABASE.commit()
-    
-    for timer in RandomCooldown:
-        RandomCooldown[timer] -= 5
-        
-        if RandomCooldown[timer] <= 0:
-            del RandomCooldown[timer]
+        while fetch != None:
+            userId = fetch[0]
+            size = fetch[2]
+
+            size += random.choice([0, 0, 0, 1, 1, 2, 3])
+
+            CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
+
+            fetch = CURSOR.fetchone()
+
+        DATABASE.commit()
+
+        for timer in RandomCooldown:
+            RandomCooldown[timer] -= 5
+
+            if RandomCooldown[timer] <= 0:
+                del RandomCooldown[timer]
+
+        sleep(300)
     
 ## Крутые функции
 def cmd_start(update, context):
