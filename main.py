@@ -68,7 +68,7 @@ def cmd_top(update, context):
     message = "<b>Топ чайных грибов</b>"
     for entry in users:
         message += f"\n{entry[1]}мм у {entry[0]}"
-    context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode=telegram.constants.PARSEMODE_MARKDOWN)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode=telegram.constants.PARSEMODE_HTML)
     
 
 def cmd_random(update, context):
