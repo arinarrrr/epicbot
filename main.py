@@ -68,7 +68,7 @@ def cmd_top(update, context):
     
     message = "<b>Топ чайных грибов</b>\n"
     for entry in users:
-        message += f"\n{entry[1]}мм у {entry[0]}"
+        message += f"\n{entry[1]}мм у <b>{entry[0]}</b>"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="html")
     
 
