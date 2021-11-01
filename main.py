@@ -22,21 +22,22 @@ RandomCooldown = {}
 
 ## Циклы гриба
 def shroom_update_cycle():
-    sleep(900)
-    CURSOR.execute ("SELECT * FROM users")
-    fetch = CURSOR.fetchone()
+    sleep(300)
+    print("Шаг цикла!")
     
-    while fetch != None:
+    CURSOR.execute ("SELECT * FROM users")
+    
+    while (fetch = CURSOR.fetchone()) != None:
         userId = fetch[0]
         size = fetch[2]
         
-        size += 1
+        size += random.choice(0, 0, 0, 1, 1, 2, 3)
         
         CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
         DATABASE.commit()
     
     for timer in RandomCooldown:
-        RandomCooldown[timer] -= 15
+        RandomCooldown[timer] -= 5
         
         if RandomCooldown[timer] <= 0:
             del RandomCooldown[timer]
@@ -44,6 +45,26 @@ def shroom_update_cycle():
 ## Крутые функции
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Я чайный бот!")
+
+def cmd_top(update, context):
+    CURSOR.execute ("SELECT * FROM users")
+    fetch = CURSOR.fetchone()
+    
+    users = []
+    
+    while fetch != None:
+        userName = fetch[1]
+        size = fetch[2]
+        
+        users.append([userName, size])
+    
+    users = sorted(users, key = lambda x: x[1])
+    
+    message = "Топ чайных грибов:"
+    for entry in users:
+        message += f"{entry[1]} у {entry[0]}"
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+    
 
 def cmd_random(update, context):
     userId = update.message.from_user.id;
