@@ -27,7 +27,8 @@ def shroom_update_cycle():
     
     CURSOR.execute ("SELECT * FROM users")
     
-    while (fetch = CURSOR.fetchone()) != None:
+    fetch = CURSOR.fetchone()
+    while fetch != None:
         userId = fetch[0]
         size = fetch[2]
         
@@ -35,6 +36,8 @@ def shroom_update_cycle():
         
         CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
         DATABASE.commit()
+        
+        fetch = CURSOR.fetchone()
     
     for timer in RandomCooldown:
         RandomCooldown[timer] -= 5
