@@ -60,6 +60,8 @@ def cmd_top(update, context):
         size = fetch[2]
         
         users.append([userName, size])
+        
+        fetch = CURSOR.fetchone()
     
     users = sorted(users, key = lambda x: x[1])
     
