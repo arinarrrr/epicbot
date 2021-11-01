@@ -67,7 +67,7 @@ def cmd_top(update, context):
     
     message = "Топ чайных грибов:"
     for entry in users:
-        message += f"\n{entry[1]} у {entry[0]}"
+        message += f"\n{entry[1]}мм у {entry[0]}"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
     
 
@@ -103,11 +103,11 @@ def cmd_random(update, context):
             if specialMessage:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Холи шит! Ваш чайный гриб уменьшился до минимального размера!")
             elif deltaSize > 0:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ого! Ваш чайный гриб увеличился на {deltaSize} мм!")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ого! Ваш чайный гриб увеличился на {deltaSize}мм!")
             elif deltaSize == 0:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Кринж! Ваш чайный гриб не изменился")
             else:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Жесть! Ваш чайный гриб уменьшился на {-deltaSize} мм!")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Жесть! Ваш чайный гриб уменьшился на {-deltaSize}мм!")
                        
 def cmd_createshroom(update, context):
     userId = update.message.from_user.id;
@@ -136,7 +136,7 @@ def cmd_checkshroom(update, context):
     
     else:
         bmsg_balance = str(fetch[0])
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Размер чайного гриба: "+bmsg_balance+" мм")
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Размер чайного гриба: "+bmsg_balance+"мм")
     
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
