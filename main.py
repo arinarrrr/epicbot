@@ -56,8 +56,8 @@ checkshroom_handler = CommandHandler('checkshroom', cmd_checkshroom)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
-dispatcher.add_handler(selldata_handler)
-dispatcher.add_handler(balance_handler)
+dispatcher.add_handler(createshroom_handler)
+dispatcher.add_handler(checkshroom_handler)
 
 ## Запускаем бота
 updater.start_polling()
