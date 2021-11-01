@@ -32,7 +32,7 @@ def shroom_update_cycle():
             userId = fetch[0]
             size = fetch[2]
 
-            size += random.choice([0, 0, 0, 1, 1, 2, 3])
+            size += random.choice([-2, -1, 0, 0, 0, 1, 1, 1, 2, 2, 3])
 
             CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
 
