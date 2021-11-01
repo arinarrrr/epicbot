@@ -32,7 +32,7 @@ def shroom_update_cycle():
             userId = fetch[0]
             size = fetch[2]
 
-            size += random.choice([-2, -1, 0, 0, 0, 1, 1, 1, 2, 2, 3])
+            size += random.choice([-2, -1, -1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 5])
             if size < 1:
                 size = 1
 
@@ -89,7 +89,7 @@ def cmd_random(update, context):
 
         else:
             size = fetch[0]
-            deltaSize = int(random.randrange(-10, 12))
+            deltaSize = int(random.randrange(-8, 15))
             
             if size + deltaSize < 1:
                 size = 1
@@ -101,7 +101,7 @@ def cmd_random(update, context):
             CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize} WHERE userid = {userId}")
             DATABASE.commit()
 
-            RandomCooldown.update({userId: 45})
+            RandomCooldown.update({userId: 180})
             
             if specialMessage:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Холи шит! Ваш чайный гриб уменьшился до минимального размера!")
