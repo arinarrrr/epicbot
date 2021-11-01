@@ -63,7 +63,7 @@ def cmd_top(update, context):
         
         fetch = CURSOR.fetchone()
     
-    users = sorted(users, key = lambda x: x[1], reversed=True)
+    users = sorted(users, key = lambda x: x[1], reverse=True)
     
     message = "Топ чайных грибов:"
     for entry in users:
