@@ -49,7 +49,7 @@ def cmd_random(update, context):
     userId = update.message.from_user.id;
     
     if userId in RandomCooldown:
-        context.bot.send_message(chat_id=update.effective_chat.id, text=f"Полегче-полегче! Следующий рандом вам будет доступен примерно через {RandomCooldown[userId]}")
+        context.bot.send_message(chat_id=update.effective_chat.id, text=f"Полегче-полегче! Следующий рандом вам будет доступен примерно через {RandomCooldown[userId]} минут")
         
     else:
         CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(userId))
