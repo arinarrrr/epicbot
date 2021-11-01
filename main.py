@@ -23,8 +23,6 @@ RandomCooldown = {}
 ## Циклы гриба
 def shroom_update_cycle():
     while True:
-        print("Шаг цикла!")
-
         CURSOR.execute ("SELECT * FROM users")
 
         fetchall = CURSOR.fetchall()
