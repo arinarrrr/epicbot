@@ -65,7 +65,7 @@ def cmd_random(update, context):
             CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize} WHERE userid = {userId}")
             DATABASE.commit()
 
-            RandomCooldown.update{userId: 180}
+            RandomCooldown.update({userId: 180})
 
             if deltaSize > 0:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ого! Ваш чайный гриб увеличился на {deltaSize} мм!")
