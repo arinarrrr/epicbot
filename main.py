@@ -61,13 +61,22 @@ def cmd_random(update, context):
         else:
             size = fetch[0]
             deltaSize = int(random.randrange(-10, 12))
+            
+            if size + deltaSize < 1:
+                size = 1
+                deltaSize = 0
+                specialMessage = True
+            else:
+                specialMessage = False
 
             CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize} WHERE userid = {userId}")
             DATABASE.commit()
 
             RandomCooldown.update({userId: 180})
-
-            if deltaSize > 0:
+            
+            if specialMessage:
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Холи шит! Ваш чайный гриб уменьшился до минимального размера!")
+            elif deltaSize > 0:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ого! Ваш чайный гриб увеличился на {deltaSize} мм!")
             elif deltaSize == 0:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Кринж! Ваш чайный гриб не изменился")
