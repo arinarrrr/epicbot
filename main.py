@@ -27,16 +27,14 @@ def shroom_update_cycle():
 
         CURSOR.execute ("SELECT * FROM users")
 
-        fetch = CURSOR.fetchone()
-        while fetch != None:
+        fetchall = CURSOR.fetchall()
+        for fetch in fetchall:
             userId = fetch[0]
             size = fetch[2]
 
             size += random.choice([0, 0, 0, 1, 1, 2, 3])
 
             CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
-
-            fetch = CURSOR.fetchone()
 
         DATABASE.commit()
 
