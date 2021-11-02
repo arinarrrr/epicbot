@@ -287,7 +287,7 @@ start_handler = CommandHandler('start', cmd_start)
 createshroom_handler = CommandHandler('createshroom', cmd_createshroom)
 checkshroom_handler = CommandHandler('checkshroom', cmd_checkshroom)
 random_handler = CommandHandler('random', cmd_random)
-upgrade_handler = CommandHandler('random', cmd_upgrade)
+upgrade_handler = CommandHandler('upgrade', cmd_upgrade)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(top_handler)
