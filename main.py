@@ -59,11 +59,13 @@ def shroom_update_cycle():
             size = fetch[2]
             
             # Изменение размера
-            if size > (average*4):
-                size += random.choice([-10, -8, -4, -3, -2, -1, -1, 0, 0, 0, 1, 1, 2])
+            if size > (average*3):
+                size += random.choice([-10, -8, -7, -3, -2, -2, -1, -1, 0, 1, 1, 2, 2, 3])
             elif size > (average*2):
-                size += random.choice([-5, -2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 2, 2])
+                size += random.choice([-6, -3, -2, -2, -1, -1, 0, 0, 0, 1, 1, 1, 2])
             elif size > (average*1.5):
+                size += random.choice([-5, -2, -2, -1, -1, 0, 0, 0, 1, 1, 1, 2, 2])
+            elif size > (average*1.25):
                 size += random.choice([-3, -2, -2, -1, -1, 0, 0, 1, 1, 1, 2, 2, 2, 2])
             elif size > (average*0.75):
                 size += random.choice([-2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 5])
