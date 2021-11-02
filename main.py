@@ -265,7 +265,7 @@ def callback_query_got(update, context):
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler, CallbackQueryHandler
 
-callback_query_handler(callback_query_got)
+callback_query_handler = CallbackQueryHandler(callback_query_got)
 
 top_handler = CommandHandler('top', cmd_top)
 start_handler = CommandHandler('start', cmd_start)
