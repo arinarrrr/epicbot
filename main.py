@@ -150,7 +150,7 @@ def cmd_random(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=f"Полегче-полегче! Следующий рандом вам будет доступен примерно через {time_stylish(RandomCooldown[userId])}")
         
     else:
-        CURSOR.execute ("SELECT (balance, randlvl, luckLvl) FROM users WHERE userid="+str(userId))
+        CURSOR.execute ("SELECT balance, randlvl, luckLvl FROM users WHERE userid="+str(userId))
         fetch = CURSOR.fetchone()
 
         if fetch == None:
@@ -268,7 +268,7 @@ def cmd_upgrade(update, context):
             if context.args[0] == "rand": # Игрок улучшает скорость роста гриба
                 if size >= int(100*(1.5**randLvl))+1:
                     size -= int(100*(1.5**randLvl))
-                    growLvl += 1
+                    randLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш чайгрибрандом был улучшен до уровня {randLvl}")
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
