@@ -45,7 +45,7 @@ def time_stylish(number):
 ## Циклы гриба
 def shroom_update_cycle(): # Цикл обновления игры
     while True:
-        CURSOR.execute ("SELECT (userid, balance, growlvl, lucklvl) FROM users")
+        CURSOR.execute ("SELECT userid, balance, growlvl, lucklvl FROM users")
 
         fetchall = CURSOR.fetchall()
         
@@ -233,7 +233,7 @@ def cmd_checkshroom(update, context):
 def cmd_upgrade(update, context):
     userId = update.message.from_user.id;
     
-    CURSOR.execute ("SELECT (balance, randlvl, growlvl, lucklvl) FROM users WHERE userid="+str(userId))
+    CURSOR.execute ("SELECT balance, randlvl, growlvl, lucklvl FROM users WHERE userid="+str(userId))
     fetch = CURSOR.fetchone()
     
     if fetch == None:
