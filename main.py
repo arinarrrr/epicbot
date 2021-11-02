@@ -257,14 +257,14 @@ def cmd_upgrade(update, context):
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша удача была улучшена до уровня {luckLvl}")
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
-            if context.args[0] == "grow": # Игрок улучшает скорость роста гриба
+            elif context.args[0] == "grow": # Игрок улучшает скорость роста гриба
                 if size >= int(100*(1.15**growLvl))+1:
                     size -= int(100*(1.15**growLvl))
                     growLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш гриб был улучшен до уровня {growLvl}")
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
-            if context.args[0] == "rand": # Игрок улучшает скорость роста гриба
+            elif context.args[0] == "rand": # Игрок улучшает скорость роста гриба
                 if size >= int(100*(1.5**randLvl))+1:
                     size -= int(100*(1.5**randLvl))
                     randLvl += 1
