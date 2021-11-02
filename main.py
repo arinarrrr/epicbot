@@ -51,7 +51,7 @@ def shroom_update_cycle(): # Цикл обновления игры
         
         average = 0
         for fetch in fetchall:
-            average += fetch[2]
+            average += fetch[1]
         average = int(average/len(fetchall))
         
         for fetch in fetchall:
