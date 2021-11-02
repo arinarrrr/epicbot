@@ -184,9 +184,9 @@ def cmd_checkshroom(update, context):
         size = fetch[0]
         
         if userId in LastVisit:
-            if size > LastVisit:
+            if size > LastVisit[userId]:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}")
-            elif size == LastVisit:
+            elif size == LastVisit[userId]:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб не изменился")
             else:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}")
