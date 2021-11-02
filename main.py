@@ -17,8 +17,9 @@ dispatcher = updater.dispatcher
 DATABASE = psycopg2.connect(dbname='dc9mv72g5rq199', user='expfuoggsoeeqp', password='8be9b873d53b0b38ba8fb3b7a0274db21e934813af12ecf4ed0bdee244422707', host='ec2-54-220-170-192.eu-west-1.compute.amazonaws.com')
 CURSOR = DATABASE.cursor()
 
-## Таймер
+## Таймер и прочее
 RandomCooldown = {}
+LastVisit = {}
 
 ## Просто функции
 def len_stylish(number):
@@ -47,11 +48,32 @@ def shroom_update_cycle():
         CURSOR.execute ("SELECT * FROM users")
 
         fetchall = CURSOR.fetchall()
+        
+        average = 0
+        for fetch in fetchall:
+            average += fetch[2]
+        average = int(average/len(fetchall))
+        
         for fetch in fetchall:
             userId = fetch[0]
             size = fetch[2]
-
-            size += random.choice([-2, -1, -1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 5])
+            
+            # Изменение размера
+            if size > (average*4):
+                size += random.choice([-10, -8, -4, -3, -2, -1, -1, 0, 0, 0, 1, 1, 2])
+            elif size > (average*2):
+                size += random.choice([-5, -2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 2, 2])
+            elif size > (average*1.5):
+                size += random.choice([-3, -2, -2, -1, -1, 0, 0, 1, 1, 1, 2, 2, 2, 2])
+            elif size > (average*0.75):
+                size += random.choice([-2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 5])
+            elif size > (average*0.5):
+                size += random.choice([-1, -1, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 5])
+            elif size > (average*0.2):
+                size += random.choice([0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 8, 10])
+            else:
+                size += random.choice([2, 2, 3, 3, 3, 4, 4, 5, 5, 7, 8, 10, 12])
+                
             if size < 1:
                 size = 1
 
@@ -159,8 +181,21 @@ def cmd_checkshroom(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="У вас ещё нет чайного гриба")
     
     else:
-        bmsg_balance = str(fetch[0])
-        context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(bmsg_balance)}")
+        size = fetch[0]
+        
+        if userId in LastVisit:
+            if size > LastVisit:
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}")
+            elif size == LastVisit:
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб не изменился")
+            else:
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}")
+            
+            LastVisit[userId] = size
+        else:
+            context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}")
+            LastVisit.update({userId: size})
+
     
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
