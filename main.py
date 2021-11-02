@@ -219,11 +219,11 @@ def cmd_checkshroom(update, context):
         
         if userId in LastVisit:
             if size > LastVisit[userId]:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}")
             elif size == LastVisit[userId]:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб не изменился")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n\nС момента последнего посещения ваш гриб не изменился")
             else:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}")
             
             LastVisit[userId] = size
         else:
@@ -248,9 +248,11 @@ def cmd_upgrade(update, context):
         luckLvl = fetch[3]
         
         if len(context.args) == 0:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"/upgrade luck - улучшить уровень удачи\nВаш уровень удачи: {luckLvl}\nЦена улучшения: {len_stylish(int(100*(1.3**luckLvl)))}")
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"/upgrade grow - улучшить гриб\nВаш уровень гриба: {growLvl}\nЦена улучшения: {len_stylish(int(100*(1.15**growLvl)))}")
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"/upgrade rand - улучшить чайгрибрандом\nВаш уровень чайгрибрандома: {randLvl}\nЦена улучшения: {len_stylish(int(100*(1.5**randLvl)))}")
+            message  = f"`/upgrade luck` - улучшить уровень удачи\n\nВаш уровень удачи: {luckLvl}\nЦена улучшения: {len_stylish(int(100*(1.3**luckLvl)))}" + "\n\n"
+            message += f"`/upgrade grow` - улучшить гриб\n\nВаш уровень гриба: {growLvl}\nЦена улучшения: {len_stylish(int(100*(1.15**growLvl)))}" + "\n\n"
+            message += f"`/upgrade rand` - улучшить чайгрибрандом\n\nВаш уровень чайгрибрандома: {randLvl}\nЦена улучшения: {len_stylish(int(100*(1.5**randLvl)))}"
+
+            context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
         else:
             if context.args[0] == "luck": # Игрок улучшает удачу
                 if size >= int(100*(1.3**luckLvl))+1:
