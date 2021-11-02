@@ -23,21 +23,21 @@ RandomCooldown = {}
 ## Просто функции
 def len_stylish(number):
     if number < 10:
-        return str(number)+" мм"
+        return str(number)+"мм"
     elif number < 100:
-        return str(number/10)+" см"
+        return str(number/10)+"см"
     elif number < 1000:
-        return str(number/100)+" дм"
+        return str(number/100)+"дм"
     elif number < 1000000:
-        return str(number/1000)+" м"
+        return str(number/1000)+"м"
     else:
-        return str(number/1000000)+" км"
+        return str(number/1000000)+"км"
 
 def time_stylish(number):
     if number < 60:
-        return str(number)+" мин"
+        return str(number)+"мин"
     elif number % 60 == 0:
-        return str(number / 60)+" ч"
+        return str(int(number / 60))+"ч"
     else:
         return str(int(number / 60))+" ч "+str(number % 60)+" мин"
 
