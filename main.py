@@ -247,37 +247,15 @@ def cmd_upgrade(update, context):
         growLvl = fetch[2]
         luckLvl = fetch[3]
         
-        if len(context.args) == 0:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"/upgrade luck - улучшить уровень удачи\nВаш уровень удачи: {luckLvl}\nЦена улучшения: {len_stylish(int(100*(1.3**luckLvl)))}")
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"/upgrade grow - улучшить гриб\nВаш уровень гриба: {growLvl}\nЦена улучшения: {len_stylish(int(100*(1.15**growLvl)))}")
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"/upgrade rand - улучшить чайгрибрандом\nВаш уровень чайгрибрандома: {randLvl}\nЦена улучшения: {len_stylish(int(100*(1.5**randLvl)))}")
-        else:
-            if context.args[0] == "luck": # Игрок улучшает удачу
-                if size >= int(100*(1.3**luckLvl))+1:
-                    size -= int(100*(1.3**luckLvl))
-                    luckLvl += 1
-                    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша удача была улучшена до уровня {luckLvl}")
-                else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
-            elif context.args[0] == "grow": # Игрок улучшает скорость роста гриба
-                if size >= int(100*(1.15**growLvl))+1:
-                    size -= int(100*(1.15**growLvl))
-                    growLvl += 1
-                    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш гриб был улучшен до уровня {growLvl}")
-                else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
-            elif context.args[0] == "rand": # Игрок улучшает скорость роста гриба
-                if size >= int(100*(1.5**randLvl))+1:
-                    size -= int(100*(1.5**randLvl))
-                    randLvl += 1
-                    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш чайгрибрандом был улучшен до уровня {randLvl}")
-                else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
-            else:
-                context.bot.send_message(chat_id=update.effective_chat.id, text="Вы чё улучшать собрались? Нифига не понятно")
+        keyboard = [[InlineKeyboardButton(f"Удача ({len_stylish(int(100*(1.2**luckLvl)))})", callback_data='"upgrade_luck')],
+                        [InlineKeyboardButton(f'Скорость роста ({len_stylish(int(100*(1.3**growLvl)))})', callback_data='upgrade_grow')],
+                        [InlineKeyboardButton(f'Чай гриб рандом ({len_stylish(int(100*(1.5**randLvl)))})', callback_data='upgrade_rand')]]
+        message = f"Текущий размер гриба - {len_stylish(size)}\n\nТекущие уровни:\nУдача: {luckLvl}\nСкорость: {growLvl}\nРандом: {randLvl}\n\nВыберите улучшение}"
+        context.bot.send_message(chat_id=update.effective_chat.id, text=message, reply_markup=keyboard)
+            
         
-            CURSOR.execute (f"UPDATE users SET balance = {size}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl} WHERE userid = {userId}")
-            DATABASE.commit()
+        #    CURSOR.execute (f"UPDATE users SET balance = {size}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl} WHERE userid = {userId}")
+        #    DATABASE.commit()
                 
     
 ## Устанавливаем какие-то держатели
