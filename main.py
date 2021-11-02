@@ -20,6 +20,27 @@ CURSOR = DATABASE.cursor()
 ## Таймер
 RandomCooldown = {}
 
+## Просто функции
+def len_stylish(number):
+    if number < 10:
+        return str(number)+" мм"
+    elif number < 100:
+        return str(number/10)+" см"
+    elif number < 1000:
+        return str(number/100)+" дм"
+    elif number < 1000000:
+        return str(number/1000)+" м"
+    else:
+        return str(number/1000000)+" км"
+
+def time_stylish(number):
+    if number < 60:
+        return str(number)+" мин"
+    elif number % 60 == 0:
+        return str(number / 60)+" ч"
+    else:
+        return str(int(number / 60))+" ч "+str(number % 60)+" мин"
+
 ## Циклы гриба
 def shroom_update_cycle():
     while True:
@@ -37,8 +58,10 @@ def shroom_update_cycle():
             CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
 
         DATABASE.commit()
+        
+        RandomCooldownCopy = RandomCooldown.copy()
 
-        for timer in RandomCooldown:
+        for timer in RandomCooldownCopy:
             RandomCooldown[timer] -= 5
 
             if RandomCooldown[timer] <= 0:
@@ -68,7 +91,7 @@ def cmd_top(update, context):
     
     message = "<b>Топ чайных грибов</b>\n"
     for entry in users:
-        message += f"\n{entry[1]}мм у <b>{entry[0]}</b>"
+        message += f"\n{len_stylish(entry[1])} у <b>{entry[0]}</b>"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="html")
     
 
@@ -76,7 +99,7 @@ def cmd_random(update, context):
     userId = update.message.from_user.id;
     
     if userId in RandomCooldown:
-        context.bot.send_message(chat_id=update.effective_chat.id, text=f"Полегче-полегче! Следующий рандом вам будет доступен примерно через {RandomCooldown[userId]} минут")
+        context.bot.send_message(chat_id=update.effective_chat.id, text=f"Полегче-полегче! Следующий рандом вам будет доступен примерно через {time_stylish(RandomCooldown[userId])}")
         
     else:
         CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(userId))
@@ -104,11 +127,11 @@ def cmd_random(update, context):
             if specialMessage:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Холи шит! Ваш чайный гриб уменьшился до минимального размера!")
             elif deltaSize > 0:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ого! Ваш чайный гриб увеличился на {deltaSize}мм!")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ого! Ваш чайный гриб увеличился на {len_stylish(deltaSize)}!")
             elif deltaSize == 0:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Кринж! Ваш чайный гриб не изменился")
             else:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Жесть! Ваш чайный гриб уменьшился на {-deltaSize}мм!")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Жесть! Ваш чайный гриб уменьшился на {len_stylish(-deltaSize)}!")
                        
 def cmd_createshroom(update, context):
     userId = update.message.from_user.id;
@@ -137,7 +160,7 @@ def cmd_checkshroom(update, context):
     
     else:
         bmsg_balance = str(fetch[0])
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Размер чайного гриба: "+bmsg_balance+"мм")
+        context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(bmsg_balance)}")
     
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
