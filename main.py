@@ -132,7 +132,7 @@ def cmd_random(update, context):
 
         else:
             size = fetch[0]
-            deltaSize = int(random.randrange(-24, 45))
+            deltaSize = int(random.randrange(-50, 80))
             
             if size + deltaSize < 1:
                 size = 1
