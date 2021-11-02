@@ -248,9 +248,9 @@ def cmd_upgrade(update, context):
         growLvl = fetch[2]
         luckLvl = fetch[3]
         
-        keyboard = [[InlineKeyboardButton(f"Удача ({len_stylish(int(100*(1.2**luckLvl)))})", callback_data='"upgrade_luck')],
-                        [InlineKeyboardButton(f'Скорость роста ({len_stylish(int(100*(1.3**growLvl)))})', callback_data='upgrade_grow')],
-                        [InlineKeyboardButton(f'Чай гриб рандом ({len_stylish(int(100*(1.5**randLvl)))})', callback_data='upgrade_rand')]]
+        keyboard = [[InlineKeyboardButton(f"Удача ({len_stylish(int(100*(1.2**luckLvl)))})", callback_data=f"upgrade;luck;{userId}")],
+                        [InlineKeyboardButton(f'Скорость роста ({len_stylish(int(100*(1.3**growLvl)))})', callback_data=f"upgrade;grow;{userId}")],
+                        [InlineKeyboardButton(f'Чай гриб рандом ({len_stylish(int(100*(1.5**randLvl)))})', callback_data=f"upgrade;rand;{userId}")]]
         message = f"Текущий размер гриба - {len_stylish(size)}\n\nТекущие уровни:\nУдача: {luckLvl}\nСкорость: {growLvl}\nРандом: {randLvl}\n\nВыберите улучшение"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message, reply_markup=InlineKeyboardMarkup(keyboard))
             
@@ -258,9 +258,14 @@ def cmd_upgrade(update, context):
         #    CURSOR.execute (f"UPDATE users SET balance = {size}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl} WHERE userid = {userId}")
         #    DATABASE.commit()
                 
-    
+## Это что делать, если пришло какое-то коллбэк
+def callback_query_got(update, context):
+    print(context.bot.callback_query.data)
+
 ## Устанавливаем какие-то держатели
-from telegram.ext import CommandHandler
+from telegram.ext import CommandHandler, CallbackQueryHandler
+
+callback_query_handler(callback_query_got)
 
 top_handler = CommandHandler('top', cmd_top)
 start_handler = CommandHandler('start', cmd_start)
@@ -270,6 +275,8 @@ random_handler = CommandHandler('random', cmd_random)
 upgrade_handler = CommandHandler('upgrade', cmd_upgrade)
 
 # Устанавливаем какие-то держатели окончательно
+dispatcher.add_handler(callback_query_handler)
+
 dispatcher.add_handler(top_handler)
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(createshroom_handler)
