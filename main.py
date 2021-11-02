@@ -48,6 +48,7 @@ def shroom_update_cycle(): # Цикл обновления игры
         CURSOR.execute ("SELECT userid, balance, growlvl, lucklvl FROM users")
 
         fetchall = CURSOR.fetchall()
+        print(fetchall)
         
         average = 0
         for fetch in fetchall:
