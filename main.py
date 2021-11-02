@@ -161,7 +161,7 @@ def cmd_random(update, context):
             luckLvl = fetch[2]
             
             size = fetch[0]
-            deltaSize = int(random.randrange(-50*(1.2**randLvl)*(0.9**luckLvl), 80*(1.1**randLvl)*(1.1**luckLvl)))
+            deltaSize = int(random.randrange(int(-50*(1.2**randLvl)*(0.9**luckLvl)), int(80*(1.1**randLvl)*(1.1**luckLvl))))
             
             if size + deltaSize < 1:
                 size = 1
