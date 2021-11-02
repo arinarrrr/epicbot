@@ -5,7 +5,7 @@ import psycopg2
 import threading
 import random
 from time import sleep
-from telegram import InlineKeyboardButton
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 ## Токен
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
@@ -252,7 +252,7 @@ def cmd_upgrade(update, context):
                         [InlineKeyboardButton(f'Скорость роста ({len_stylish(int(100*(1.3**growLvl)))})', callback_data='upgrade_grow')],
                         [InlineKeyboardButton(f'Чай гриб рандом ({len_stylish(int(100*(1.5**randLvl)))})', callback_data='upgrade_rand')]]
         message = f"Текущий размер гриба - {len_stylish(size)}\n\nТекущие уровни:\nУдача: {luckLvl}\nСкорость: {growLvl}\nРандом: {randLvl}\n\nВыберите улучшение"
-        context.bot.send_message(chat_id=update.effective_chat.id, text=message, reply_markup=keyboard)
+        context.bot.send_message(chat_id=update.effective_chat.id, text=message, reply_markup=InlineKeyboardMarkup(keyboard))
             
         
         #    CURSOR.execute (f"UPDATE users SET balance = {size}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl} WHERE userid = {userId}")
