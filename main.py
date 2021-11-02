@@ -5,6 +5,7 @@ import psycopg2
 import threading
 import random
 from time import sleep
+from telegram import InlineKeyboardButton
 
 ## Токен
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
