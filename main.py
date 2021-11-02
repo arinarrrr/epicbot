@@ -40,7 +40,7 @@ def time_stylish(number):
     elif number % 60 == 0:
         return str(int(number / 60))+"ч"
     else:
-        return str(int(number / 60))+" ч "+str(number % 60)+" мин"
+        return str(int(number / 60))+" ч "+str(int(number % 60))+" мин"
 
 ## Циклы гриба
 def shroom_update_cycle(): # Цикл обновления игры
