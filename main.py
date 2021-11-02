@@ -82,16 +82,18 @@ def shroom_update_cycle(): # Цикл обновления игры
             for i in range(luckLvl):
                 if i % 16 == 0:
                     luckarr.append(3)
+                    luckarr.append(-1)
                 elif i % 8 == 0:
                     luckarr.append(2)
-                elif i % 2 == 0:
+                    luckarr.append(0)
+                elif i % 4 == 0:
                     luckarr.append(1)
             
             for i in range(len(luckarr)):
                 if luckarr[i] > 0:
-                    luckarr[i] *= int((1.2*growLvl)*(1.1*luckLvl))
+                    luckarr[i] *= int((1.3*growLvl))
                 elif luckarr[i] < 0:
-                    luckarr[i] *= int((1.4*growLvl)*(0.9*luckLvl))
+                    luckarr[i] *= int((1.5*growLvl)*(0.9*luckLvl))
             
             size += random.choice(luckarr)
             
@@ -160,7 +162,7 @@ def cmd_random(update, context):
             luckLvl = fetch[2]
             
             size = fetch[0]
-            deltaSize = int(random.randrange(int(-50*(1.2**randLvl)*(0.9**luckLvl)), int(80*(1.1**randLvl)*(1.1**luckLvl))))
+            deltaSize = int(random.randrange(int(-50*(1.2**randLvl)*(0.8**luckLvl)), int(80*(1.2**randLvl))))
             
             if size + deltaSize < 1:
                 size = 1
@@ -172,7 +174,7 @@ def cmd_random(update, context):
             CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize} WHERE userid = {userId}")
             DATABASE.commit()
 
-            RandomCooldown.update({userId: 240*(0.95**randLvl)})
+            RandomCooldown.update({userId: int(48*(0.95**randLvl))*5})
             
             if specialMessage:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Холи шит! Ваш чайный гриб уменьшился до минимального размера!")
