@@ -251,7 +251,7 @@ def cmd_upgrade(update, context):
         keyboard = [[InlineKeyboardButton(f"Удача ({len_stylish(int(100*(1.2**luckLvl)))})", callback_data='"upgrade_luck')],
                         [InlineKeyboardButton(f'Скорость роста ({len_stylish(int(100*(1.3**growLvl)))})', callback_data='upgrade_grow')],
                         [InlineKeyboardButton(f'Чай гриб рандом ({len_stylish(int(100*(1.5**randLvl)))})', callback_data='upgrade_rand')]]
-        message = f"Текущий размер гриба - {len_stylish(size)}\n\nТекущие уровни:\nУдача: {luckLvl}\nСкорость: {growLvl}\nРандом: {randLvl}\n\nВыберите улучшение}"
+        message = f"Текущий размер гриба - {len_stylish(size)}\n\nТекущие уровни:\nУдача: {luckLvl}\nСкорость: {growLvl}\nРандом: {randLvl}\n\nВыберите улучшение"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message, reply_markup=keyboard)
             
         
