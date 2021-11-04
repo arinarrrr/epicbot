@@ -249,7 +249,7 @@ def cmd_upgrade(update, context):
         
         if len(context.args) == 0:
             message  = f"`/upgrade luck` - улучшить уровень удачи\n\nВаш уровень удачи: {luckLvl}\nЦена улучшения: {len_stylish(int(100*(1.3**luckLvl)))}" + "\n\n"
-            message += f"`/upgrade grow` - улучшить гриб\n\nВаш уровень гриба: {growLvl}\nЦена улучшения: {len_stylish(int(100*(1.15**growLvl)))}" + "\n\n"
+            message += f"`/upgrade grow` - улучшить гриб\n\nВаш уровень гриба: {growLvl}\nЦена улучшения: {len_stylish(int(150*(1.25**growLvl)))}" + "\n\n"
             message += f"`/upgrade rand` - улучшить чайгрибрандом\n\nВаш уровень чайгрибрандома: {randLvl}\nЦена улучшения: {len_stylish(int(100*(1.5**randLvl)))}"
 
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
@@ -262,8 +262,8 @@ def cmd_upgrade(update, context):
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
             elif context.args[0] == "grow": # Игрок улучшает скорость роста гриба
-                if size >= int(100*(1.15**growLvl))+1:
-                    size -= int(100*(1.15**growLvl))
+                if size >= int(150*(1.25**growLvl))+1:
+                    size -= int(150*(1.25**growLvl))
                     growLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш гриб был улучшен до уровня {growLvl}")
                 else:
