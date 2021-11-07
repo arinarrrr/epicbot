@@ -99,9 +99,9 @@ def shroom_update_cycle(): # Цикл обновления игры
             
             for i in range(len(luckarr)):
                 if luckarr[i] > 0:
-                    luckarr[i] *= int((1.2*growLvl))
+                    luckarr[i] *= int((1.2**growLvl))
                 elif luckarr[i] < 0:
-                    luckarr[i] *= int((1.3*growLvl)*(0.9*luckLvl))
+                    luckarr[i] *= int((1.3**growLvl)*(0.9**luckLvl))
             
             size += random.choice(luckarr)
             
