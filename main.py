@@ -63,37 +63,45 @@ def shroom_update_cycle(): # Цикл обновления игры
             
             # Изменение размера
             if size > (average*3):
+                luckdelta = 0
                 luckarr = [-10, -8, -7, -3, -2, -2, -1, -1, 0, 1, 1, 2, 2, 3]
             elif size > (average*2):
+                luckdelta = 0
                 luckarr = [-6, -3, -2, -2, -1, -1, 0, 0, 0, 1, 1, 1, 2, 2]
             elif size > (average*1.5):
+                luckdelta = 0
                 luckarr = [-5, -2, -2, -1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3]
             elif size > (average*1.25):
+                luckdelta = 0
                 luckarr = [-3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 2, 2, 3]
             elif size > (average*0.75):
+                luckdelta = 1
                 luckarr = [-2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 5]
             elif size > (average*0.5):
+                luckdelta = 2
                 luckarr = [-1, -1, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 5]
             elif size > (average*0.2):
+                luckdelta = 4
                 luckarr = [0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 8, 10]
             else:
+                luckdelta = 6
                 luckarr = [2, 2, 3, 3, 3, 4, 4, 5, 5, 7, 8, 10, 12]
             
             for i in range(luckLvl):
-                if i % 16 == 0:
-                    luckarr.append(3)
+                if i % 12 == 0:
+                    luckarr.append(3 + luckdelta)
                     luckarr.append(-1)
-                elif i % 8 == 0:
-                    luckarr.append(2)
+                elif i % 6 == 0:
+                    luckarr.append(2 + luckdelta)
                     luckarr.append(0)
-                elif i % 4 == 0:
-                    luckarr.append(1)
+                elif i % 3 == 0:
+                    luckarr.append(1 + luckdelta)
             
             for i in range(len(luckarr)):
                 if luckarr[i] > 0:
-                    luckarr[i] *= int((1.3*growLvl))
+                    luckarr[i] *= int((1.2*growLvl))
                 elif luckarr[i] < 0:
-                    luckarr[i] *= int((1.5*growLvl)*(0.9*luckLvl))
+                    luckarr[i] *= int((1.3*growLvl)*(0.9*luckLvl))
             
             size += random.choice(luckarr)
             
