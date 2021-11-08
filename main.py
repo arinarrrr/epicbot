@@ -45,7 +45,7 @@ def time_stylish(number):
 ## Циклы гриба
 def shroom_update_cycle(): # Цикл обновления игры
     while True:
-        CURSOR.execute ("SELECT userid, balance, growlvl, lucklvl FROM users")
+        CURSOR.execute ("SELECT userid, balance, growlvl, lucklvl, yeasts FROM users")
 
         fetchall = CURSOR.fetchall()
         
@@ -60,6 +60,8 @@ def shroom_update_cycle(): # Цикл обновления игры
             
             growLvl = fetch[2]
             luckLvl = fetch[3]
+            
+            yeasts = fetch[4]
             
             # Изменение размера
             if size > (average*3):
@@ -103,12 +105,16 @@ def shroom_update_cycle(): # Цикл обновления игры
                 elif luckarr[i] < 0:
                     luckarr[i] *= int((1.3**growLvl)*(0.9**luckLvl))
             
-            size += random.choice(luckarr)
+            addValue = random.choice(luckarr)
+            size += addValue
+            
+            if (addValue > 0):
+                yeasts += addValue
             
             if size < 1:
                 size = 1
 
-            CURSOR.execute (f"UPDATE users SET balance = {size} WHERE userid = {userId}")
+            CURSOR.execute (f"UPDATE users SET balance = {size}, yeasts = {yeasts} WHERE userid = {userId}")
 
         DATABASE.commit()
         
