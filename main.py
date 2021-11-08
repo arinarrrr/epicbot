@@ -110,6 +110,9 @@ def shroom_update_cycle(): # Цикл обновления игры
             
             if (addValue > 0):
                 yeasts += addValue
+            else:
+                yeasts -= addValue
+
             
             if size < 1:
                 size = 1
@@ -202,7 +205,7 @@ def cmd_random(update, context):
             CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize} WHERE userid = {userId}")
             DATABASE.commit()
 
-            RandomCooldown.update({userId: int(48*(0.95**randLvl))*5})
+            RandomCooldown.update({userId: int(36*(0.95**randLvl))*5})
             
             if specialMessage:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Холи шит! Ваш чайный гриб уменьшился до минимального размера!")
@@ -267,22 +270,22 @@ def cmd_checkshroom(update, context):
 def cmd_upgrade(update, context):
     userId = update.message.from_user.id;
     
-    CURSOR.execute ("SELECT balance, randlvl, growlvl, lucklvl FROM users WHERE userid="+str(userId))
+    CURSOR.execute ("SELECT yeasts, randlvl, growlvl, lucklvl FROM users WHERE userid="+str(userId))
     fetch = CURSOR.fetchone()
     
     if fetch == None:
         context.bot.send_message(chat_id=update.effective_chat.id, text="У вас ещё нет чайного гриба, вам нечего улучшать")
     
     else:
-        size = fetch[0]
+        yeasts = fetch[0]
         randLvl = fetch[1]
         growLvl = fetch[2]
         luckLvl = fetch[3]
         
         if len(context.args) == 0:
-            message  = f"`/upgrade luck` - улучшить уровень удачи\n\nВаш уровень удачи: {luckLvl}\nЦена улучшения: {len_stylish(int(100*(1.3**luckLvl)))}" + "\n\n"
-            message += f"`/upgrade grow` - улучшить гриб\n\nВаш уровень гриба: {growLvl}\nЦена улучшения: {len_stylish(int(150*(1.25**growLvl)))}" + "\n\n"
-            message += f"`/upgrade rand` - улучшить чайгрибрандом\n\nВаш уровень чайгрибрандома: {randLvl}\nЦена улучшения: {len_stylish(int(100*(1.5**randLvl)))}"
+            message  = f"`/upgrade luck` - улучшить уровень удачи\n\nВаш уровень удачи: {luckLvl}\nЦена улучшения: {int(100*(1.3**luckLvl))} дрожжей" + "\n\n"
+            message += f"`/upgrade grow` - улучшить гриб\n\nВаш уровень гриба: {growLvl}\nЦена улучшения: {int(150*(1.25**growLvl))} дрожжей" + "\n\n"
+            message += f"`/upgrade rand` - улучшить чайгрибрандом\n\nВаш уровень чайгрибрандома: {randLvl}\nЦена улучшения: {int(100*(1.5**randLvl))} дрожжей"
 
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
         else:
@@ -310,7 +313,7 @@ def cmd_upgrade(update, context):
             else:
                 context.bot.send_message(chat_id=update.effective_chat.id, text="Вы чё улучшать собрались? Нифига не понятно")
         
-            CURSOR.execute (f"UPDATE users SET balance = {size}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl} WHERE userid = {userId}")
+            CURSOR.execute (f"UPDATE users SET yeasts = {yeasts}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl} WHERE userid = {userId}")
             DATABASE.commit()
                 
     
