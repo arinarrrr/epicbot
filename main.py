@@ -313,8 +313,8 @@ from telegram.ext import CommandHandler
 
 nuclear_handler = CommandHandler('nuclear', cmd_nuclear)
 top_handler = CommandHandler('top', cmd_top)
-start_handler = CommandHandler('start', cmd_start)
-createshroom_handler = CommandHandler('createshroom', cmd_createshroom)
+start_handler = CommandHandler('start', cmd_createshroom)
+#createshroom_handler = CommandHandler('createshroom', cmd_createshroom)
 checkshroom_handler = CommandHandler('checkshroom', cmd_checkshroom)
 random_handler = CommandHandler('random', cmd_random)
 upgrade_handler = CommandHandler('upgrade', cmd_upgrade)
