@@ -241,7 +241,7 @@ def cmd_checkshroom(update, context):
         algae = fetch[1]
         yeasts = fetch[2]
         
-        balanceMessage = f"Баланс водорослей: {algae}\nБаланс дрожжей: {yeasts}")
+        balanceMessage = f"Баланс водорослей: {algae}\nБаланс дрожжей: {yeasts}"
         
         if userId in LastVisit:
             if size > LastVisit[userId]:
