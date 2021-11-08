@@ -324,7 +324,7 @@ dispatcher.add_handler(nuclear_handler)
 dispatcher.add_handler(top_handler)
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(createshroom_handler)
-dispatcher.add_handler(checkshroom_handler)
+#dispatcher.add_handler(checkshroom_handler)
 dispatcher.add_handler(random_handler)
 dispatcher.add_handler(upgrade_handler)
 
