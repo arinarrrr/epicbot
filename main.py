@@ -290,26 +290,26 @@ def cmd_upgrade(update, context):
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
         else:
             if context.args[0] == "luck": # Игрок улучшает удачу
-                if size >= int(100*(1.3**luckLvl))+1:
-                    size -= int(100*(1.3**luckLvl))
+                if yeasts >= int(100*(1.3**luckLvl))+1:
+                    yeasts -= int(100*(1.3**luckLvl))
                     luckLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша удача была улучшена до уровня {luckLvl}")
                 else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком мало дрожжей")
             elif context.args[0] == "grow": # Игрок улучшает скорость роста гриба
-                if size >= int(150*(1.25**growLvl))+1:
-                    size -= int(150*(1.25**growLvl))
+                if yeasts >= int(150*(1.25**growLvl)):
+                    yeasts -= int(150*(1.25**growLvl))
                     growLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш гриб был улучшен до уровня {growLvl}")
                 else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком мало дрожжей")
             elif context.args[0] == "rand": # Игрок улучшает скорость роста гриба
-                if size >= int(100*(1.5**randLvl))+1:
-                    size -= int(100*(1.5**randLvl))
+                if yeasts >= int(100*(1.5**randLvl)):
+                    yeasts -= int(100*(1.5**randLvl))
                     randLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш чайгрибрандом был улучшен до уровня {randLvl}")
                 else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Гриб слишком мал")
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком мало дрожжей")
             else:
                 context.bot.send_message(chat_id=update.effective_chat.id, text="Вы чё улучшать собрались? Нифига не понятно")
         
