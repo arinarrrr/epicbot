@@ -127,6 +127,20 @@ def shroom_update_cycle(): # Цикл обновления игры
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Я чайный бот!")
 
+# Ядерный гриб
+def cmd_nuclear(update, context):
+    userId = update.message.from_user.id
+    CURSOR.execute(f"SELECT balance FROM users WHERE userid = {userId}")
+
+    fetch = CURSOR.fetchone()
+    
+    balance = fetch[0]
+
+    if(balance < 1000000):
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком рано...")
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Жесть!")
+    
 
 # Команда, выводящая топ чайных грибов
 def cmd_top(update, context):
@@ -293,6 +307,7 @@ def cmd_upgrade(update, context):
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
 
+nuclear_handler = CommandHandler('nuclear', cmd_nuclear)
 top_handler = CommandHandler('top', cmd_top)
 start_handler = CommandHandler('start', cmd_start)
 createshroom_handler = CommandHandler('createshroom', cmd_createshroom)
@@ -301,6 +316,7 @@ random_handler = CommandHandler('random', cmd_random)
 upgrade_handler = CommandHandler('upgrade', cmd_upgrade)
 
 # Устанавливаем какие-то держатели окончательно
+dispatcher.add_handler(nuclear_handler)
 dispatcher.add_handler(top_handler)
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(createshroom_handler)
