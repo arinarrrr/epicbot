@@ -230,7 +230,7 @@ def cmd_createshroom(update, context):
 def cmd_checkshroom(update, context): 
     userId = update.message.from_user.id;
     
-    CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(userId))
+    CURSOR.execute ("SELECT balance, algae, yeasts FROM users WHERE userid="+str(userId))
     fetch = CURSOR.fetchone()
     
     if fetch == None:
@@ -238,18 +238,22 @@ def cmd_checkshroom(update, context):
     
     else:
         size = fetch[0]
+        algae = fetch[1]
+        yeasts = fetch[2]
+        
+        balanceMessage = f"Баланс водорослей: {algae}\nБаланс дрожжей: {yeasts}")
         
         if userId in LastVisit:
             if size > LastVisit[userId]:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}\n\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}")
             elif size == LastVisit[userId]:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n\nС момента последнего посещения ваш гриб не изменился")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}\n\nС момента последнего посещения ваш гриб не изменился")
             else:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}")
+                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}\n\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}")
             
             LastVisit[userId] = size
         else:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}")
+            context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}")
             LastVisit.update({userId: size})
 
 
