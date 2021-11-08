@@ -182,7 +182,7 @@ def cmd_random(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=f"Полегче-полегче! Следующий рандом вам будет доступен примерно через {time_stylish(RandomCooldown[userId])}")
         
     else:
-        CURSOR.execute ("SELECT balance, randlvl, luckLvl FROM users WHERE userid="+str(userId))
+        CURSOR.execute ("SELECT balance, randlvl, luckLvl, algae FROM users WHERE userid="+str(userId))
         fetch = CURSOR.fetchone()
 
         if fetch == None:
@@ -191,6 +191,8 @@ def cmd_random(update, context):
         else:
             randLvl = fetch[1]
             luckLvl = fetch[2]
+
+            algae = fetch[3]
             
             size = fetch[0]
             deltaSize = int(random.randrange(int(-50*(1.2**randLvl)*(0.8**luckLvl)), int(80*(1.2**randLvl))))
@@ -202,7 +204,10 @@ def cmd_random(update, context):
             else:
                 specialMessage = False
 
-            CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize} WHERE userid = {userId}")
+            if (deltaSize > 0):
+                algae += int(deltaSize/300)
+
+            CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize}, algae = {algae} WHERE userid = {userId}")
             DATABASE.commit()
 
             RandomCooldown.update({userId: int(36*(0.95**randLvl))*5})
