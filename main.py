@@ -74,13 +74,13 @@ def shroom_update_cycle(): # Цикл обновления игры
             
             for i in range(luckLvl):
                 if i % 12 == 0:
-                    luckarr.append(3 + luckdelta)
+                    luckarr.append(3)
                     luckarr.append(-1)
                 elif i % 6 == 0:
-                    luckarr.append(2 + luckdelta)
+                    luckarr.append(2)
                     luckarr.append(0)
                 elif i % 3 == 0:
-                    luckarr.append(1 + luckdelta)
+                    luckarr.append(1)
             
             if userId in BGrow:
                 growBoosterBonus = 4
