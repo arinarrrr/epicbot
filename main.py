@@ -166,7 +166,7 @@ def cmd_shop(update, context):
                     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы приобрели бустер рандома")
                     algae -= bRandPrice
                     if userId in BRand:
-                        BRand.userId += 2
+                        BRand[userId] += 2
                     else:
                         BRand.update({userId: 2})
                 else:
@@ -176,7 +176,7 @@ def cmd_shop(update, context):
                     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы приобрели бустер дрожжей")
                     algae -= bYestPrice
                     if userId in BYest:
-                        BYest.userId += 120
+                        BYest[UserId] += 120
                     else:
                         BYest.update({userId: 120})
                 else:
@@ -186,7 +186,7 @@ def cmd_shop(update, context):
                     context.bot.send_message(chat_id=update.effective_chat.id, text="Вы приобрели бустер роста")
                     algae -= bGrowPrice
                     if userId in BGrow:
-                        BGrow.userId += 180
+                        BGrow[userId] += 180
                     else:
                         BGrow.update({userId: 180})
                 else:
