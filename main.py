@@ -155,7 +155,7 @@ def cmd_shop(update, context):
             message += f"`/shop brand` - купить бустер рандома за {bRandPrice} водорослей" + "\n" + "Увеличивает награду на следующие два рандома" + "\n\n"
             message += f"`/shop byest` - купить бустер дрожжей за {bYestPrice} водорослей" + "\n" + "Увеличивает добычу дрожжей на два часа в три раза" + "\n\n"
             message += f"`/shop bgrow` - купить бустер роста за {bGrowPrice} водорослей" + "\n" + "Увеличивает рост размера гриба на три часа" + "\n\n"
-            message += f"`/shop sizeup` - увеличить гриб в полтора раза за {sizeupPrice} водорослей" + "\n\n"
+            message += f"`/shop sizeup` - увеличить гри на одну пятую за {sizeupPrice} водорослей" + "\n\n"
             message += f"`/shop bomb` - купить бомбу за {bombPrice} водорослей" + "\n" + "Подрывает гриб нескольким участникам (может и Вас задеть)" + "\n\n"
             
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
@@ -199,7 +199,7 @@ def cmd_shop(update, context):
                     CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(userId))
                     fetch = CURSOR.fetchone()
                     
-                    CURSOR.execute (f"UPDATE users SET balance={fetch[0]*1.5} WHERE userid="+str(userId))
+                    CURSOR.execute (f"UPDATE users SET balance={fetch[0]*1.2} WHERE userid="+str(userId))
                     DATABASE.commit()
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
