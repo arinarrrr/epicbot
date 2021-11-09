@@ -152,11 +152,11 @@ def cmd_shop(update, context):
         
         if len(context.args) == 0:
             message = f"(Нажмите на команду, чтобы скопировать)" + "\n\n"
-            message += f"`/shop brand` - купить бустер рандома за {bRandPrice} водорослей" + "\n\n" + "Увеличивает награду на следующие два рандома" + "\n\n"
-            message += f"`/shop byest` - купить бустер дрожжей за {bYestPrice} водорослей" + "\n\n" + "Увеличивает добычу дрожжей на два часа в три раза" + "\n\n"
-            message += f"`/shop bgrow` - купить бустер роста за {bGrowPrice} водорослей" + "\n\n" + "Увеличивает рост размера гриба на три часа" + "\n\n"
+            message += f"`/shop brand` - купить бустер рандома за {bRandPrice} водорослей" + "\n" + "Увеличивает награду на следующие два рандома" + "\n\n"
+            message += f"`/shop byest` - купить бустер дрожжей за {bYestPrice} водорослей" + "\n" + "Увеличивает добычу дрожжей на два часа в три раза" + "\n\n"
+            message += f"`/shop bgrow` - купить бустер роста за {bGrowPrice} водорослей" + "\n" + "Увеличивает рост размера гриба на три часа" + "\n\n"
             message += f"`/shop sizeup` - увеличить гриб в полтора раза за {sizeupPrice} водорослей" + "\n\n"
-            message += f"`/shop bomb` - купить бомбу за {bombPrice} водорослей" + "\n\n" + "Подрывает гриб нескольким участникам (может и Вас задеть)" + "\n\n"
+            message += f"`/shop bomb` - купить бомбу за {bombPrice} водорослей" + "\n" + "Подрывает гриб нескольким участникам (может и Вас задеть)" + "\n\n"
             
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
         else:
@@ -418,11 +418,11 @@ def cmd_upgrade(update, context):
         if len(context.args) == 0:
             message = f"Улучшение стоит {value} дрожжей" + "\n\n"
             message += f"(Нажмите на команду, чтобы скопировать)" + "\n\n"
-            message += f"`/upgrade luck` - улучшить уровень удачи\nВаш уровень удачи: {luckLvl}" + "\n\n" + "Уменьшает шанс уменьшения гриба" + "\n\n"
-            message += f"`/upgrade grow` - улучшить гриб\nВаш уровень гриба: {growLvl}" + "\n\n" + "Увеличивает пассивное изменение размера гриба" + "\n\n"
-            message += f"`/upgrade rand` - улучшить рандом\n\nВаш уровень рандома: {randLvl}" + "\n\n" + "Увеличивает награду от рандома" + "\n\n"
-            message += f"`/upgrade yest` - улучшить ферму дрожжей\n\nВаш уровень фермы: {yeastLvl}" + "\n\n" + "Увеличивает количество получаемых дрожжей" + "\n\n"
-            message += f"`/upgrade rans` - улучшить скорость рандома\n\nВаш уровень скорости: {randSpeedLvl}" + "\n\n" + "Уменьшает паузу между рандомами" + "\n\n"
+            message += f"`/upgrade luck` - улучшить уровень удачи\nВаш уровень удачи: {luckLvl}" + "\n\n" + "Уменьшает шанс уменьшения гриба" + "\n\n\n"
+            message += f"`/upgrade grow` - улучшить гриб\nВаш уровень гриба: {growLvl}" + "\n\n" + "Увеличивает пассивное изменение размера гриба" + "\n\n\n"
+            message += f"`/upgrade rand` - улучшить рандом\nВаш уровень рандома: {randLvl}" + "\n\n" + "Увеличивает награду от рандома" + "\n\n\n"
+            message += f"`/upgrade yest` - улучшить ферму дрожжей\nВаш уровень фермы: {yeastLvl}" + "\n\n" + "Увеличивает количество получаемых дрожжей" + "\n\n\n"
+            message += f"`/upgrade rans` - улучшить скорость рандома\nВаш уровень скорости: {randSpeedLvl}" + "\n\n" + "Уменьшает паузу между рандомами" + "\n\n\n"
             
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
         else:
