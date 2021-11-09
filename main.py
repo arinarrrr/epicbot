@@ -410,7 +410,7 @@ def cmd_upgrade(update, context):
         value = int((1.4**(randLvl+growLvl+luckLvl+yeastLvl+randSpeedLvl))*100)
         
         if len(context.args) == 0:
-            message += f"Улучшение стоит {value} дрожжей" + "\n\n"
+            message = f"Улучшение стоит {value} дрожжей" + "\n\n"
             message += f"(Нажмите на команду, чтобы скопировать)" + "\n\n"
             message += f"`/upgrade luck` - улучшить уровень удачи\nВаш уровень удачи: {luckLvl}" + "\n\n" + "Уменьшает шанс уменьшения гриба" + "\n\n"
             message += f"`/upgrade grow` - улучшить гриб\nВаш уровень гриба: {growLvl}" + "\n\n" + "Увеличивает пассивное изменение размера гриба" + "\n\n"
