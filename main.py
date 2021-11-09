@@ -21,6 +21,11 @@ CURSOR = DATABASE.cursor()
 RandomCooldown = {}
 LastVisit = {}
 
+## Бустеры
+BRand = {}
+BYest = {}
+BGrow = {}
+
 ## Просто функции
 def len_stylish(number):
     if number < 10:
@@ -45,7 +50,7 @@ def time_stylish(number):
 ## Циклы гриба
 def shroom_update_cycle(): # Цикл обновления игры
     while True:
-        CURSOR.execute ("SELECT userid, balance, growlvl, lucklvl, yeasts FROM users")
+        CURSOR.execute ("SELECT userid, balance, growlvl, lucklvl, yeastlvl, yeasts FROM users")
 
         fetchall = CURSOR.fetchall()
         
@@ -60,34 +65,12 @@ def shroom_update_cycle(): # Цикл обновления игры
             
             growLvl = fetch[2]
             luckLvl = fetch[3]
+            yeastLvl = fetch[4]
             
-            yeasts = fetch[4]
+            yeasts = fetch[5]
             
             # Изменение размера
-            if size > (average*3):
-                luckdelta = 0
-                luckarr = [-10, -8, -7, -3, -2, -2, -1, -1, 0, 1, 1, 2, 2, 3]
-            elif size > (average*2):
-                luckdelta = 0
-                luckarr = [-6, -3, -2, -2, -1, -1, 0, 0, 0, 1, 1, 1, 2, 2]
-            elif size > (average*1.5):
-                luckdelta = 0
-                luckarr = [-5, -2, -2, -1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3]
-            elif size > (average*1.25):
-                luckdelta = 0
-                luckarr = [-3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 2, 2, 3]
-            elif size > (average*0.75):
-                luckdelta = 1
-                luckarr = [-2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 5]
-            elif size > (average*0.5):
-                luckdelta = 2
-                luckarr = [-1, -1, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 5]
-            elif size > (average*0.2):
-                luckdelta = 4
-                luckarr = [0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 8, 10]
-            else:
-                luckdelta = 6
-                luckarr = [2, 2, 3, 3, 3, 4, 4, 5, 5, 7, 8, 10, 12]
+            luckarr = [-2, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2]
             
             for i in range(luckLvl):
                 if i % 12 == 0:
@@ -99,21 +82,27 @@ def shroom_update_cycle(): # Цикл обновления игры
                 elif i % 3 == 0:
                     luckarr.append(1 + luckdelta)
             
+            if userId in BGrow:
+                growBoosterBonus = 4
+            else:
+                growBoosterBonus = 1
+            
             for i in range(len(luckarr)):
                 if luckarr[i] > 0:
-                    luckarr[i] *= int((1.2**growLvl))
+                    luckarr[i] *= int((1.2**growLvl))*growBoosterBonus
                 elif luckarr[i] < 0:
                     luckarr[i] *= int((1.3**growLvl)*(0.9**luckLvl))
             
             addValue = random.choice(luckarr)
             size += addValue
             
-            if (addValue > 0):
-                yeasts += addValue
+            # Рост дрожжей
+            if userId in BYest:
+                yeasts += (1 + int(1.5**yeastLvl))*3
             else:
-                yeasts -= addValue
+                yeasts += 1 + int(1.5**yeastLvl)
 
-            
+            # Не даём грибу уйти в минус
             if size < 1:
                 size = 1
 
@@ -122,19 +111,119 @@ def shroom_update_cycle(): # Цикл обновления игры
         DATABASE.commit()
         
         RandomCooldownCopy = RandomCooldown.copy()
-
         for timer in RandomCooldownCopy:
             RandomCooldown[timer] -= 5
-
             if RandomCooldown[timer] <= 0:
                 del RandomCooldown[timer]
+        
+        BYestCopy = BYest.copy()
+        for booster in BYestCopy:
+            BYest[booster] -= 5
+            if BYest[booster] <= 0:
+                del BYest[booster]
+        
+        BGrowCopy = BGrow.copy()
+        for booster in BGrowCopy:
+            BGrow[booster] -= 5
+            if BGrow[booster] <= 0:
+                del BGrow[booster]
 
         sleep(300)
     
 ## Крутые функции
 # Команда, выводящая какую-то фразу
-def cmd_start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Я чайный бот!")
+def cmd_shop(update, context):
+    userId = update.message.from_user.id;
+    
+    CURSOR.execute ("SELECT algae FROM users WHERE userid="+str(userId))
+    fetch = CURSOR.fetchone()
+    
+    if fetch == None:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="У Вас ещё нет чайного гриба, мы Вам ничего продавать не собираемся")
+    
+    else:
+        algae = fetch[0]
+        
+        value = int((1.4**(randLvl+growLvl+luckLvl+yeastLvl+randSpeedLvl))*100)
+        
+        if len(context.args) == 0:
+            bRandPrice = 2
+            bYestPrice = 3
+            bGrowPrice = 2
+            sizeupPrice = 10
+            bombPrice = 7
+            
+            message = f"(Нажмите на команду, чтобы скопировать)" + "\n\n"
+            message += f"`/shop brand` - купить бустер рандома за {bRandPrice} водорослей" + "\n\n" + "Увеличивает награду на следующие два рандома" + "\n\n"
+            message += f"`/shop byest` - купить бустер дрожжей за {bYestPrice} водорослей" + "\n\n" + "Увеличивает добычу дрожжей на два часа в три раза" + "\n\n"
+            message += f"`/shop bgrow` - купить бустер роста за {bGrowPrice} водорослей" + "\n\n" + "Увеличивает рост размера гриба на три часа" + "\n\n"
+            message += f"`/shop sizeup` - увеличить гриб в полтора раза за {bSizeupPrice} водорослей" = "\n\n"
+            message += f"`/shop bomb` - купить бомбу за {bombPrice} водорослей" + "\n\n" + "Подрывает гриб нескольким участникам (может и Вас задеть)" + "\n\n"
+            
+            context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
+        else:
+            heckmessage = "Вам не хватает водорослей! Проваливайте, нищук."
+            if context.args[0] == "brand":
+                if algae >= bRandPrice:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Вы приобрели бустер рандома")
+                    algae -= bRandPrice
+                    if userId in BRand:
+                        BRand.userId += 2
+                    else:
+                        BRand.update({userId: 2})
+                else:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
+            elif context.args[0] == "byest":
+                if algae >= bYestPrice:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Вы приобрели бустер дрожжей")
+                    algae -= bYestPrice
+                    if userId in BYest:
+                        BYest.userId += 120
+                    else:
+                        BYest.update({userId: 120})
+                else:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
+            elif context.args[0] == "bgrow":
+                if algae >= bGrowPrice:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Вы приобрели бустер роста")
+                    algae -= bGrowPrice
+                    if userId in BGrow:
+                        BGrow.userId += 180
+                    else:
+                        BGrow.update({userId: 180})
+                else:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
+            elif context.args[0] == "sizeup":
+                if algae >= sizeupPrice:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Вы увеличили гриб")
+                    algae -= sizeupPrice
+                    
+                    CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(userId))
+                    fetch = CURSOR.fetchone()
+                    
+                    CURSOR.execute (f"UPDATE users SET balance={fetch[0]*1.5} WHERE userid="+str(userId))
+                else:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
+            elif context.args[0] == "bomb":
+                if algae >= bombPrice:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="У Вас не бомбит")
+                    algae -= bombPrice
+                    
+                    CURSOR.execute ("SELECT userid FROM users")
+                    fetchall = CURSOR.fetchall()
+                    
+                    random.shuffle(fetchall)
+                    
+                    for i in range(3):
+                        victimId = fetchall[i][0]
+                        
+                        CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(victimId))
+                        fetch = CURSOR.fetchone()
+                        CURSOR.execute (f"UPDATE users SET balance={fetch[0]*0.75} WHERE userid="+str(victimId))
+                else:
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
+            else:
+                context.bot.send_message(chat_id=update.effective_chat.id, text="Мы такое не продаём")
 
 # Ядерный гриб
 def cmd_nuclear(update, context):
@@ -148,8 +237,27 @@ def cmd_nuclear(update, context):
     if(balance < 1000000):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком рано...")
     else:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Жесть!")
-    
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Вы уничтожили мир!")
+        
+        CURSOR.execute ("SELECT userid, growlvl, lucklvl, randlvl, yeastlvl, randspeedlvl, yeasts, algae FROM users")
+        
+        fetchall = CURSOR.fetchall()
+        
+        for fetch in fetchall:
+            userid = fetch[0]
+            growLvl = fetch[1]
+            luckLvl = fetch[2]
+            randLvl = fetch[3]
+            yeastLvl = fetch[4]
+            randSpeedLvl = fetch[5]
+            yeasts = fetch[6]
+            algae = fetch[7]
+            
+            algae += 3*(growLvl+luckLvl+randLvl+yeastLvl+randSpeedLvl) + int(yeasts/1000)
+            
+            CURSOR.execute (f"UPDATE users SET growlvl=0, lucklvl=0, randlvl=0, yeastlvl=0, randspeedlvl=0, yeasts=0, algae={algae} WHERE userid={userid}")
+
+            
 
 # Команда, выводящая топ чайных грибов
 def cmd_top(update, context):
@@ -182,7 +290,7 @@ def cmd_random(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=f"Полегче-полегче! Следующий рандом вам будет доступен примерно через {time_stylish(RandomCooldown[userId])}")
         
     else:
-        CURSOR.execute ("SELECT balance, randlvl, luckLvl, algae FROM users WHERE userid="+str(userId))
+        CURSOR.execute ("SELECT balance, randlvl, randspeedlvl, luckLvl, algae FROM users WHERE userid="+str(userId))
         fetch = CURSOR.fetchone()
 
         if fetch == None:
@@ -190,12 +298,21 @@ def cmd_random(update, context):
 
         else:
             randLvl = fetch[1]
-            luckLvl = fetch[2]
+            randSpeedLvl = fetch[2]
+            luckLvl = fetch[3]
 
-            algae = fetch[3]
+            algae = fetch[4]
             
             size = fetch[0]
-            deltaSize = int(random.randrange(int(-50*(1.2**randLvl)*(0.8**luckLvl)), int(80*(1.2**randLvl))))
+            
+            if(userId in BRand):
+                deltaSize = int(random.randrange(int(-50*(1.1**randLvl)*(0.8**luckLvl)), int(250*(1.1**randLvl))))
+                
+                BRand[userId] -= 1
+                if BRand[userId] == 0:
+                    del BRand[userId]
+            else:
+                deltaSize = int(random.randrange(int(-50*(1.1**randLvl)*(0.8**luckLvl)), int(80*(1.1**randLvl))))
             
             if size + deltaSize < 1:
                 size = 1
@@ -210,7 +327,7 @@ def cmd_random(update, context):
             CURSOR.execute (f"UPDATE users SET balance = {size+deltaSize}, algae = {algae} WHERE userid = {userId}")
             DATABASE.commit()
 
-            RandomCooldown.update({userId: int(36*(0.95**randLvl))*5})
+            RandomCooldown.update({userId: int(36*(0.8**randSpeedLvl))*5})
             
             if specialMessage:
                 context.bot.send_message(chat_id=update.effective_chat.id, text=f"Холи шит! Ваш чайный гриб уменьшился до минимального размера!")
@@ -255,27 +372,28 @@ def cmd_checkshroom(update, context):
         algae = fetch[1]
         yeasts = fetch[2]
         
-        balanceMessage = f"Баланс водорослей: {algae}\nБаланс дрожжей: {yeasts}"
+        balanceMessage = f"Размер чайного гриба: {len_stylish(size)}\nБаланс водорослей: {algae}\nБаланс дрожжей: {yeasts}"
         
         if userId in LastVisit:
             if size > LastVisit[userId]:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}\n\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}")
+                balanceMessage += f"\n\nС момента последнего посещения ваш гриб вырос на {len_stylish(size - LastVisit[userId])}"
             elif size == LastVisit[userId]:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}\n\nС момента последнего посещения ваш гриб не изменился")
+                balanceMessage += f"\n\nС момента последнего посещения ваш гриб не изменился"
             else:
-                context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}\n\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}")
+                balanceMessage += f"\n\nС момента последнего посещения ваш гриб уменбшился на {len_stylish(LastVisit[userId] - size)}"
             
             LastVisit[userId] = size
         else:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=f"Размер чайного гриба: {len_stylish(size)}\n{balanceMessage}")
             LastVisit.update({userId: size})
+        
+        context.bot.send_message(chat_id=update.effective_chat.id, text=balanceMessage)
 
 
 # Улучшения
 def cmd_upgrade(update, context):
     userId = update.message.from_user.id;
     
-    CURSOR.execute ("SELECT yeasts, randlvl, growlvl, lucklvl FROM users WHERE userid="+str(userId))
+    CURSOR.execute ("SELECT yeasts, randlvl, growlvl, lucklvl, yeastlvl, randspeedlvl FROM users WHERE userid="+str(userId))
     fetch = CURSOR.fetchone()
     
     if fetch == None:
@@ -286,39 +404,47 @@ def cmd_upgrade(update, context):
         randLvl = fetch[1]
         growLvl = fetch[2]
         luckLvl = fetch[3]
+        yeastLvl = fetch[4]
+        randSpeedLvl = fetch[5]
+        
+        value = int((1.4**(randLvl+growLvl+luckLvl+yeastLvl+randSpeedLvl))*100)
         
         if len(context.args) == 0:
-            message  = f"`/upgrade luck` - улучшить уровень удачи\n\nВаш уровень удачи: {luckLvl}\nЦена улучшения: {int(100*(1.3**luckLvl))} дрожжей" + "\n\n"
-            message += f"`/upgrade grow` - улучшить гриб\n\nВаш уровень гриба: {growLvl}\nЦена улучшения: {int(150*(1.25**growLvl))} дрожжей" + "\n\n"
-            message += f"`/upgrade rand` - улучшить чайгрибрандом\n\nВаш уровень чайгрибрандома: {randLvl}\nЦена улучшения: {int(100*(1.5**randLvl))} дрожжей"
-
+            message += f"Улучшение стоит {value} дрожжей" + "\n\n"
+            message += f"(Нажмите на команду, чтобы скопировать)" + "\n\n"
+            message += f"`/upgrade luck` - улучшить уровень удачи\nВаш уровень удачи: {luckLvl}" + "\n\n" + "Уменьшает шанс уменьшения гриба" + "\n\n"
+            message += f"`/upgrade grow` - улучшить гриб\nВаш уровень гриба: {growLvl}}" + "\n\n" + "Увеличивает пассивное изменение размера гриба" + "\n\n"
+            message += f"`/upgrade rand` - улучшить рандом\n\nВаш уровень рандома: {randLvl}" = "\n\n" + "Увеличивает награду от рандома" + "\n\n"
+            message += f"`/upgrade yest` - улучшить ферму дрожжей\n\nВаш уровень фермы: {yeastLvl}" = "\n\n" + "Увеличивает количество получаемых дрожжей" + "\n\n"
+            message += f"`/upgrade rans` - улучшить скорость рандома\n\nВаш уровень скорости: {randSpeedLvl}" = "\n\n" + "Уменьшает паузу между рандомами" + "\n\n"
+            
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
         else:
-            if context.args[0] == "luck": # Игрок улучшает удачу
-                if yeasts >= int(100*(1.3**luckLvl))+1:
-                    yeasts -= int(100*(1.3**luckLvl))
+            if yeasts >= value:
+                yeasts -= value
+                
+                if context.args[0] == "luck": # Игрок улучшает удачу
                     luckLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша удача была улучшена до уровня {luckLvl}")
-                else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком мало дрожжей")
-            elif context.args[0] == "grow": # Игрок улучшает скорость роста гриба
-                if yeasts >= int(150*(1.25**growLvl)):
-                    yeasts -= int(150*(1.25**growLvl))
+                elif context.args[0] == "grow": # Игрок улучшает скорость роста гриба
                     growLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш гриб был улучшен до уровня {growLvl}")
-                else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком мало дрожжей")
-            elif context.args[0] == "rand": # Игрок улучшает скорость роста гриба
-                if yeasts >= int(100*(1.5**randLvl)):
-                    yeasts -= int(100*(1.5**randLvl))
+                elif context.args[0] == "rand": # Игрок улучшает рандом
                     randLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваш чайгрибрандом был улучшен до уровня {randLvl}")
+                elif context.args[0] == "yest": # Игрок улучшает дрожжи
+                    yeastLvl += 1
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша ферма дрожжей была улучшена до уровня {yeastLvl}")
+                elif context.args[0] == "rans": # Игрок улучшает скорость рандома
+                    randomSpeedLvl += 1
+                    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша скорость рандома была улучшена до уровня {randSpeedLvl}")
                 else:
-                    context.bot.send_message(chat_id=update.effective_chat.id, text="Слишком мало дрожжей")
+                    yeasts += int(0.75*value)
+                    context.bot.send_message(chat_id=update.effective_chat.id, text="Вы отправили нам непонятно что, Вы потратили время людей, мы забираем у Вас четверть цены улучшения")
             else:
-                context.bot.send_message(chat_id=update.effective_chat.id, text="Вы чё улучшать собрались? Нифига не понятно")
+                context.bot.send_message(chat_id=update.effective_chat.id, text="Не хватает дрожжей")
         
-            CURSOR.execute (f"UPDATE users SET yeasts = {yeasts}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl} WHERE userid = {userId}")
+            CURSOR.execute (f"UPDATE users SET yeasts = {yeasts}, lucklvl = {luckLvl}, growlvl = {growLvl}, randLvl = {randLvl}, yeastlvl = {yeastLvl}, randspeedlvl = {randSpeedLvl} WHERE userid = {userId}")
             DATABASE.commit()
                 
     
