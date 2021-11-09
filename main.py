@@ -144,13 +144,13 @@ def cmd_shop(update, context):
     else:
         algae = fetch[0]
         
+        bRandPrice = -1
+        bYestPrice = -1
+        bGrowPrice = -1
+        sizeupPrice = -1
+        bombPrice = -1
+        
         if len(context.args) == 0:
-            bRandPrice = 2
-            bYestPrice = 3
-            bGrowPrice = 2
-            sizeupPrice = 10
-            bombPrice = 7
-            
             message = f"(Нажмите на команду, чтобы скопировать)" + "\n\n"
             message += f"`/shop brand` - купить бустер рандома за {bRandPrice} водорослей" + "\n\n" + "Увеличивает награду на следующие два рандома" + "\n\n"
             message += f"`/shop byest` - купить бустер дрожжей за {bYestPrice} водорослей" + "\n\n" + "Увеличивает добычу дрожжей на два часа в три раза" + "\n\n"
