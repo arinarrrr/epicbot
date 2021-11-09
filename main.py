@@ -259,7 +259,7 @@ def cmd_nuclear(update, context):
             yeasts = fetch[6]
             algae = fetch[7]
             
-            algae += 3*(growLvl+luckLvl+randLvl+yeastLvl+randSpeedLvl) + int(yeasts/1000)
+            algae += int(1.5*(growLvl+luckLvl+randLvl+yeastLvl+randSpeedLvl)) + int(yeasts/15000)
             
             CURSOR.execute (f"UPDATE users SET growlvl=0, lucklvl=0, randlvl=0, yeastlvl=0, randspeedlvl=0, yeasts=0, algae={algae} WHERE userid={userid}")
 
