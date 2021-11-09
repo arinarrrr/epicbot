@@ -222,11 +222,12 @@ def cmd_shop(update, context):
                         DATABASE.commit()
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
-                
-                CURSOR.execute (f"UPDATE users SET algae={algae} WHERE userid={userId}")
-                DATABASE.commit()
+
             else:
                 context.bot.send_message(chat_id=update.effective_chat.id, text="Мы такое не продаём")
+            
+            CURSOR.execute (f"UPDATE users SET algae={algae} WHERE userid={userId}")
+            DATABASE.commit()
             
             
 
