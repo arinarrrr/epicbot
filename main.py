@@ -407,7 +407,7 @@ def cmd_upgrade(update, context):
         yeastLvl = fetch[4]
         randSpeedLvl = fetch[5]
         
-        value = int((1.4**(randLvl+growLvl+luckLvl+yeastLvl+randSpeedLvl))*100)
+        value = int((1.15**(randLvl+growLvl+luckLvl+yeastLvl+randSpeedLvl))*100)
         
         if len(context.args) == 0:
             message = f"Улучшение стоит {value} дрожжей" + "\n\n"
@@ -454,7 +454,7 @@ from telegram.ext import CommandHandler
 nuclear_handler = CommandHandler('nuclear', cmd_nuclear)
 top_handler = CommandHandler('top', cmd_top)
 start_handler = CommandHandler('start', cmd_createshroom)
-#createshroom_handler = CommandHandler('createshroom', cmd_createshroom)
+shop_handler = CommandHandler('shop', cmd_shop)
 checkshroom_handler = CommandHandler('checkshroom', cmd_checkshroom)
 random_handler = CommandHandler('random', cmd_random)
 upgrade_handler = CommandHandler('upgrade', cmd_upgrade)
@@ -463,7 +463,7 @@ upgrade_handler = CommandHandler('upgrade', cmd_upgrade)
 dispatcher.add_handler(nuclear_handler)
 dispatcher.add_handler(top_handler)
 dispatcher.add_handler(start_handler)
-#dispatcher.add_handler(createshroom_handler)
+dispatcher.add_handler(cmd_shop)
 dispatcher.add_handler(checkshroom_handler)
 dispatcher.add_handler(random_handler)
 dispatcher.add_handler(upgrade_handler)
