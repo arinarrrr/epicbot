@@ -144,11 +144,11 @@ def cmd_shop(update, context):
     else:
         algae = fetch[0]
         
-        bRandPrice = -1
-        bYestPrice = -1
-        bGrowPrice = -1
-        sizeupPrice = -1
-        bombPrice = -1
+        bRandPrice = 2
+        bYestPrice = 3
+        bGrowPrice = 2
+        sizeupPrice = 10
+        bombPrice = 8
         
         if len(context.args) == 0:
             message = f"(Нажмите на команду, чтобы скопировать)" + "\n\n"
