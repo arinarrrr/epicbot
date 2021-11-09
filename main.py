@@ -144,8 +144,6 @@ def cmd_shop(update, context):
     else:
         algae = fetch[0]
         
-        value = int((1.4**(randLvl+growLvl+luckLvl+yeastLvl+randSpeedLvl))*100)
-        
         if len(context.args) == 0:
             bRandPrice = 2
             bYestPrice = 3
@@ -157,7 +155,7 @@ def cmd_shop(update, context):
             message += f"`/shop brand` - купить бустер рандома за {bRandPrice} водорослей" + "\n\n" + "Увеличивает награду на следующие два рандома" + "\n\n"
             message += f"`/shop byest` - купить бустер дрожжей за {bYestPrice} водорослей" + "\n\n" + "Увеличивает добычу дрожжей на два часа в три раза" + "\n\n"
             message += f"`/shop bgrow` - купить бустер роста за {bGrowPrice} водорослей" + "\n\n" + "Увеличивает рост размера гриба на три часа" + "\n\n"
-            message += f"`/shop sizeup` - увеличить гриб в полтора раза за {bSizeupPrice} водорослей" + "\n\n"
+            message += f"`/shop sizeup` - увеличить гриб в полтора раза за {sizeupPrice} водорослей" + "\n\n"
             message += f"`/shop bomb` - купить бомбу за {bombPrice} водорослей" + "\n\n" + "Подрывает гриб нескольким участникам (может и Вас задеть)" + "\n\n"
             
             context.bot.send_message(chat_id=update.effective_chat.id, text=message, parse_mode="Markdown")
