@@ -200,6 +200,7 @@ def cmd_shop(update, context):
                     fetch = CURSOR.fetchone()
                     
                     CURSOR.execute (f"UPDATE users SET balance={fetch[0]*1.5} WHERE userid="+str(userId))
+                    DATABASE.commit()
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
             elif context.args[0] == "bomb":
@@ -218,10 +219,14 @@ def cmd_shop(update, context):
                         CURSOR.execute ("SELECT balance FROM users WHERE userid="+str(victimId))
                         fetch = CURSOR.fetchone()
                         CURSOR.execute (f"UPDATE users SET balance={fetch[0]*0.75} WHERE userid="+str(victimId))
+                        DATABASE.commit()
                 else:
                     context.bot.send_message(chat_id=update.effective_chat.id, text=heckmessage, parse_mode="Markdown")
             else:
                 context.bot.send_message(chat_id=update.effective_chat.id, text="Мы такое не продаём")
+            
+            CURSOR.execute (f"UPDATE users SET algae={algae} WHERE userid={userid}")
+            DATABASE.commit()
 
 # Ядерный гриб
 def cmd_nuclear(update, context):
