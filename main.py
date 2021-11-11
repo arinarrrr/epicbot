@@ -413,7 +413,7 @@ def cmd_upgrade(update, context):
         yeastLvl = fetch[4]
         randSpeedLvl = fetch[5]
         
-        value = int((1.15**(randLvl+growLvl+luckLvl+(yeastLvl)/2+randSpeedLvl))*100)
+        value = int((1.15**(randLvl+growLvl+luckLvl+(yeastLvl)/2+randSpeedLvl))*20)
         
         if len(context.args) == 0:
             message = f"Улучшение стоит {value} дрожжей" + "\n\n"
