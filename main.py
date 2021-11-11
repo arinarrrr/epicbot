@@ -98,9 +98,9 @@ def shroom_update_cycle(): # Цикл обновления игры
             
             # Рост дрожжей
             if userId in BYest:
-                yeasts += (1 + int(1.5**yeastLvl))*3
+                yeasts += (1 + int(1.1**yeastLvl))*3
             else:
-                yeasts += 1 + int(1.5**yeastLvl)
+                yeasts += 1 + int(1.1**yeastLvl)
 
             # Не даём грибу уйти в минус
             if size < 1:
@@ -413,7 +413,7 @@ def cmd_upgrade(update, context):
         yeastLvl = fetch[4]
         randSpeedLvl = fetch[5]
         
-        value = int((1.15**(randLvl+growLvl+luckLvl+yeastLvl+randSpeedLvl))*100)
+        value = int((1.15**(randLvl+growLvl+luckLvl+(yeastLvl)/2+randSpeedLvl))*100)
         
         if len(context.args) == 0:
             message = f"Улучшение стоит {value} дрожжей" + "\n\n"
@@ -442,7 +442,7 @@ def cmd_upgrade(update, context):
                     yeastLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша ферма дрожжей была улучшена до уровня {yeastLvl}")
                 elif context.args[0] == "rans": # Игрок улучшает скорость рандома
-                    randomSpeedLvl += 1
+                    randSpeedLvl += 1
                     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Ваша скорость рандома была улучшена до уровня {randSpeedLvl}")
                 else:
                     yeasts += int(0.75*value)
