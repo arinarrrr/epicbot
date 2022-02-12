@@ -24,7 +24,7 @@ def cmd_start(update, context):
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
 
-start_handler = CommandHandler('nuclear', cmd_nuclear)
+start_handler = CommandHandler('start', cmd_start)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
