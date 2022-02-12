@@ -24,7 +24,7 @@ def cmd_start(update, context):
 def msg_analysis(update, context):
     if(update.effective_message.text == "Привет"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Привет!")
-    elif:
+    else:
         context.bot.send_message(chat_id=update.effective_chat.id, text="НИХУЯ НЕ ПОНИМАЮ")
     
 ## Устанавливаем какие-то держатели
