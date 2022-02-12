@@ -36,7 +36,7 @@ def msg_greetings(update, context):
 
 # Ответы на вопрос: посмотреть лекцию 
 def msg_ermitazh_reply(update, context):
-    if(update.effective_message.text == "посмотреть лецию" or update.effective_message.text == "Посмотреть лецию"):
+    if(update.effective_message.text == "посмотреть лекцию" or update.effective_message.text == "Посмотреть лекцию"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Как тебе идея посмотреть лекцию про философсвие мемы?)")
         return ConversationHandler.END
     if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
