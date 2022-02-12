@@ -10,7 +10,7 @@ from time import sleep
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 ## Константы с номерами тем разговора
-ERMITAZH_REPLY, ARAMZAS_REPLY = range(2)
+ERMITAZH_REPLY, ARAMZAS_REPLY, DA_MEMY_REPLY = range(3)
 
 ## Всякая фигня
 updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
@@ -38,6 +38,9 @@ def msg_greetings(update, context):
 def msg_ermitazh_reply(update, context):
     if(update.effective_message.text == "посмотреть лекцию" or update.effective_message.text == "Посмотреть лекцию"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?)"
+        return DA_MEMY_REPLY
+                                 
+def  msg_memy_reply(update, context):
     if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Супер, вот ссылка: https://arzamas.academy/materials/1771")
         return ConversationHandler.END
@@ -63,10 +66,11 @@ from telegram.ext import filters
 start_handler = CommandHandler('start', cmd_start)
 conversation_handler = ConversationHandler(
     entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
-    
+# для возврата функций непонятно куда 
     states = {
         ERMITAZH_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет|посмотреть лекцию|Посмотреть лекцию)$'), msg_ermitazh_reply)],
-        ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
+        ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)],
+        DA_MEMY_REPLY: [MessageHandler(filters.Filter.regex('^(Да|Нет)$'), msg_memy_reply)]
     },
 
     fallbacks = []
