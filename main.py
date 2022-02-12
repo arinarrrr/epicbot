@@ -10,7 +10,7 @@ from time import sleep
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 ## Константы с номерами тем разговора
-ERMITAZH_REPLY, ARAMZAS_REPLY, DA_MEMY_REPLY = range(3)
+ERMITAZH_REPLY, ARAMZAS_REPLY, DA_MEMY_REPLY = range(2)
 
 ## Всякая фигня
 updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
