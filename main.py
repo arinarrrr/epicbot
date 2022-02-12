@@ -25,10 +25,9 @@ def msg_analysis(update, context):
     if(update.effective_message.text == "Привет"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Привет!")
         context.bot.send_message(chat_id=update.effective_chat.id, text="Мы можем предложить тебе пару развлечений на вечер. Как тебе идея виртуальной прогулки по Эрмитажу? Ответь да/нет")
-        
     elif(update.effective_message.text == "Нет"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Хорошо, что на счет лекции про основные философские вопросы на Арзамас?")
-         if(update.effective_message.text == "Да"):
+    if(update.effective_message.text == "Да"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Отлично, вот ссылка: ---")
         context.bot.send_message(chat_id=update.effective_chat.id, text="Мы можем предложить тебе пару развлечений на вечер. Как тебе идея виртуальной прогулки по Эрмитажу? Ответь да/нет")
         
