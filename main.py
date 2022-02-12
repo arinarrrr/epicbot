@@ -38,6 +38,7 @@ def msg_greetings(update, context):
 def msg_ermitazh_reply(update, context):
     if(update.effective_message.text == "посмотреть лецию" or update.effective_message.text == "Посмотреть лецию"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Как тебе идея посмотреть лекцию про философсвие мемы?)")
+        return ConversationHandler.END
     if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Супер, вот ссылка: https://arzamas.academy/materials/1771")
         return ConversationHandler.END
@@ -65,7 +66,7 @@ conversation_handler = ConversationHandler(
     entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
     
     states = {
-        ERMITAZH_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_ermitazh_reply)],
+        ERMITAZH_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет|Посмотреть лецию)$'), msg_ermitazh_reply)],
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     },
 
