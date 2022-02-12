@@ -64,7 +64,9 @@ conversation_handler = ConversationHandler(
     states = {
         ERMITAZH_REPLY: [MessageHandler(Filters.regex('^(Да|Нет)$'), msg_ermitazh_reply)],
         ARAMZAS_REPLY: [MessageHandler(Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
-    }
+    },
+
+    fallbacks = []
 )
 
 # Устанавливаем какие-то держатели окончательно
