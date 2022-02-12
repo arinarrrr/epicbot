@@ -59,11 +59,11 @@ from telegram.ext import filters
 
 start_handler = CommandHandler('start', cmd_start)
 conversation_handler = ConversationHandler(
-    entry_points = [MessageHandler(Filters.regex('^(Привет)$'), msg_greetings)],
+    entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
     
     states = {
-        ERMITAZH_REPLY: [MessageHandler(Filters.regex('^(Да|Нет)$'), msg_ermitazh_reply)],
-        ARAMZAS_REPLY: [MessageHandler(Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
+        ERMITAZH_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_ermitazh_reply)],
+        ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     },
 
     fallbacks = []
