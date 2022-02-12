@@ -20,11 +20,17 @@ CURSOR = DATABASE.cursor()
 # Создать чайный гриб            
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот!")
+
+def msg_analysis(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="ne ponimation")
     
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
+from telegram.ext import MessageHandler
+from telegram.ext import filters
 
 start_handler = CommandHandler('start', cmd_start)
+privet_handler = MessageHandler(filters.Filters.all)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
