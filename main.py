@@ -24,7 +24,7 @@ CURSOR = DATABASE.cursor()
 from telegram.ext import ConversationHandler
 
 def cmd_start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот! Чем я могу тебе помочь? (Здороваться не учили?)")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот! Чем я могу тебе помочь? Чтобы начать напиши 'Привет'")
 
 # Когда привет
 def msg_greetings(update, context):
