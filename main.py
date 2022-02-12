@@ -22,7 +22,7 @@ def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот! Чем я могу тебе помочь?")
 
 def msg_analysis(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="ne ponimation")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Я тебя не понимаю :(")
     
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
