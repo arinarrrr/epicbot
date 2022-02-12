@@ -34,7 +34,7 @@ msg_handler = MessageHandler(filters.Filters.all, msg_analysis)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
-#dispatcher.add_handler(msg_handler)
+dispatcher.add_handler(msg_handler)
 
 ## Запускаем бота
 updater.start_polling()
