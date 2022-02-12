@@ -19,7 +19,7 @@ CURSOR = DATABASE.cursor()
 
 # Создать чайный гриб            
 def cmd_start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот 2!")
 
 def msg_analysis(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="ne ponimation")
