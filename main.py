@@ -37,7 +37,7 @@ def msg_greetings(update, context):
 # Ответы на вопрос: посмотреть лекцию 
 def msg_ermitazh_reply(update, context):
     if(update.effective_message.text == "посмотреть лекцию" or update.effective_message.text == "Посмотреть лекцию"):
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Как тебе идея посмотреть лекцию про философские мемы?)"
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?)"
     if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Супер, вот ссылка: https://arzamas.academy/materials/1771")
         return ConversationHandler.END
