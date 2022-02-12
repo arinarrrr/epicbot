@@ -66,7 +66,7 @@ conversation_handler = ConversationHandler(
     entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
     
     states = {
-        ERMITAZH_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет|посмотреть лецию|Посмотреть лецию)$'), msg_ermitazh_reply)],
+        ERMITAZH_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет|посмотреть лекцию|Посмотреть лекцию)$'), msg_ermitazh_reply)],
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     },
 
