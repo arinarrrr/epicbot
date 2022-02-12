@@ -30,7 +30,7 @@ from telegram.ext import MessageHandler
 from telegram.ext import filters
 
 start_handler = CommandHandler('start', cmd_start)
-#msg_handler = MessageHandler(filters.Filters.all, msg_analysis)
+msg_handler = MessageHandler(filters.Filters.all, msg_analysis)
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
