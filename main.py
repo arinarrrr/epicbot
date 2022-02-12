@@ -32,10 +32,10 @@ def msg_greetings(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Мы можем предложить тебе пару развлечений на вечер. Что ты хочешь, на сегодня мы можем предложить тебе следующее: посмотреть лекцию, послушать подкасть или выбрать ближайщее мероприятие. Чтобы ответить на этот вопрос просто напиши действие!")
     context.bot.send_message(chat_id=update.effective_chat.id, text="У нашего бота есть несколько правил: Когда бот задает тебе вопрос отвечай 'да', либо 'нет' в зависимости от твоих желаний. Также, если ты передумал и не захотел ничего из предложенного, напиши вновь '/start'.")
     
-    return LEKCIA_REPLY
+    return ERMITAZH_REPLY
 
 # Ответы на вопрос: посмотреть лекцию 
-def msg_lekcia_reply(update, context):
+def msg_ermitazh_reply(update, context):
     if(update.effective_message.text == "посмотреть лецию" or update.effective_message.text == "Посмотреть лецию"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Как тебе идея посмотреть лекцию про философсвие мемы?)")
     if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
