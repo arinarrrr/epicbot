@@ -30,7 +30,8 @@ def cmd_start(update, context):
 def msg_greetings(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Привет!")
     context.bot.send_message(chat_id=update.effective_chat.id, text="Мы можем предложить тебе пару развлечений на вечер. Как тебе идея виртуальной прогулки по Эрмитажу?")
-    context.bot.send_message(chat_id=update.effective_chat.id, text="У нашего бота есть несколько правил: Когда бот задает тебе вопрос отвечай 'да', либо 'нет' в зависимости от твоих желаний. Также, если ты передумал и не захотел ничего из предложенного, напиши вновь '/start'")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="У нашего бота есть несколько правил:
+                             'Когда бот задает тебе вопрос отвечай 'да', либо 'нет' в зависимости от твоих желаний. Также, если ты передумал и не захотел ничего из предложенного, напиши вновь '/start'")
     
     return ERMITAZH_REPLY
 
