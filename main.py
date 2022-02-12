@@ -27,7 +27,7 @@ def msg_analysis(update, context):
 ## Устанавливаем какие-то держатели
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler
-#from telegram.ext import filters
+from telegram.ext import filters
 
 start_handler = CommandHandler('start', cmd_start)
 #msg_handler = MessageHandler(filters.Filters.all, msg_analysis)
