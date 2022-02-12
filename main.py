@@ -59,17 +59,17 @@ from telegram.ext import filters
 
 start_handler = CommandHandler('start', cmd_start)
 conversation_handler = ConversationHandler(
-    entry_points = [MessageHandler(Filters.regex('^(Привет)$'), msg_greetings)]
+    entry_points = [MessageHandler(Filters.regex('^(Привет)$'), msg_greetings)],
     
     states = {
-        ERMITAZH_REPLY: [MessageHandler(Filters.regex('^(Да|Нет)$'), msg_ermitazh_reply)]
+        ERMITAZH_REPLY: [MessageHandler(Filters.regex('^(Да|Нет)$'), msg_ermitazh_reply)],
         ARAMZAS_REPLY: [MessageHandler(Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     }
 )
 
 # Устанавливаем какие-то держатели окончательно
 dispatcher.add_handler(start_handler)
-dispatcher.add_handler(msg_handler)
+dispatcher.add_handler(conversation_handler)
 
 ## Запускаем бота
 updater.start_polling()
