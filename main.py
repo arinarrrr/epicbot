@@ -25,7 +25,7 @@ from telegram.ext import ConversationHandler
 
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот! Чем я могу тебе помочь? Чтобы начать напиши 'Привет'")
- 
+ return entry_points
 
 # Когда привет
 def msg_greetings(update, context):
