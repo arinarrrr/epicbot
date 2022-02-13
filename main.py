@@ -10,7 +10,7 @@ from time import sleep
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 ## Константы с номерами тем разговора
-ERMITAZH_REPLY, DA_MEMY_REPLY, ARAMZAS_REPLY = range(3)
+LEKCII_REPLY, DA_MEMY_REPLY, ARAMZAS_REPLY = range(2)
 
 ## Всякая фигня
 updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
@@ -32,12 +32,13 @@ def msg_greetings(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Мы можем предложить тебе пару развлечений на вечер. Что ты хочешь, на сегодня мы можем предложить тебе следующее: посмотреть лекцию, послушать подкасть или выбрать ближайщее мероприятие. Чтобы ответить на этот вопрос просто напиши действие!")
     context.bot.send_message(chat_id=update.effective_chat.id, text="У нашего бота есть несколько правил: Когда бот задает тебе вопрос отвечай 'да', либо 'нет' в зависимости от твоих желаний. Также, если ты передумал и не захотел ничего из предложенного, напиши вновь '/start'.")
     
-    return ERMITAZH_REPLY
+    return LEKCII_REPLY
 
 # Ответы на вопрос: посмотреть лекцию 
-def msg_ermitazh_reply(update, context):
+def msg_lekcii_reply(update, context):
     if(update.effective_message.text == "посмотреть лекцию" or update.effective_message.text == "Посмотреть лекцию"):
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?):
+                                 
     return DA_MEMY_REPLY
                                  
 def  msg_memy_reply(update, context):
@@ -68,7 +69,7 @@ conversation_handler = ConversationHandler(
     entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
 # для возврата функций непонятно куда 
     states = {
-        ERMITAZH_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет|посмотреть лекцию|Посмотреть лекцию)$'), msg_ermitazh_reply)],
+        LEKCII_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_lekcii_reply)],
         DA_MEMY_REPLY: [MessageHandler(filters.Filter.regex('^(Да|Нет)$'), msg_memy_reply)], 
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     },
