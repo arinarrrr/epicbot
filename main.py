@@ -37,8 +37,8 @@ def msg_greetings(update, context):
 # Ответы на вопрос: посмотреть лекцию 
 def msg_ermitazh_reply(update, context):
     if(update.effective_message.text == "посмотреть лекцию" or update.effective_message.text == "Посмотреть лекцию"):
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?):
-                                 return DA_MEMY_REPLY
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?)
+    return DA_MEMY_REPLY
                                  
 def  msg_memy_reply(update, context):
     if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
