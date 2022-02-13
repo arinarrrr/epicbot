@@ -10,7 +10,7 @@ from time import sleep
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 ## Константы с номерами тем разговора
-ERMITAZH_REPLY, ARAMZAS_REPLY, DA_MEMY_REPLY = range(3)
+ERMITAZH_REPLY, DA_MEMY_REPLY, ARAMZAS_REPLY = range(3)
 
 ## Всякая фигня
 updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
@@ -37,9 +37,8 @@ def msg_greetings(update, context):
 # Ответы на вопрос: посмотреть лекцию 
 def msg_ermitazh_reply(update, context):
     if(update.effective_message.text == "посмотреть лекцию" or update.effective_message.text == "Посмотреть лекцию"):
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?)"
-                                 
-    return DA_MEMY_REPLY
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?):
+                                 return DA_MEMY_REPLY
                                  
 def  msg_memy_reply(update, context):
     if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
