@@ -42,7 +42,7 @@ def msg_lekcii_reply(update, context):
     return DA_MEMY_REPLY
                                  
 def  msg_memy_reply(update, context):
-    if(update.effective_message.text == "да" or update.effective_message.text == "Да"):
+    if(update.effective_message.text == "да"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Супер, вот ссылка: https://arzamas.academy/materials/1771")
         return ConversationHandler.END
     elif(update.effective_message.text == "Нет"):
@@ -70,7 +70,7 @@ conversation_handler = ConversationHandler(
 # для возврата функций непонятно куда 
     states = {
         LEKCII_REPLY: [MessageHandler(filters.Filters.regex('^(посмотреть лекцию)$'), msg_lekcii_reply)],
-        DA_MEMY_REPLY: [MessageHandler(filters.Filter.regex('^(Да|да|Нет)$'), msg_memy_reply)], 
+        DA_MEMY_REPLY: [MessageHandler(filters.Filter.regex('^(да|Нет)$'), msg_memy_reply)], 
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     },
 
