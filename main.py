@@ -10,7 +10,7 @@ from time import sleep
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 ## Константы с номерами тем разговора
-PRIVET_REPLY, LEKCII_REPLY, DA_MEMY_REPLY, ARAMZAS_REPLY = range(4)
+LEKCII_REPLY, DA_MEMY_REPLY, ARAMZAS_REPLY = range(3)
 
 ## Всякая фигня
 updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
@@ -25,7 +25,7 @@ from telegram.ext import ConversationHandler
 
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот! Чем я могу тебе помочь? Чтобы начать напиши 'Привет'")
-    return PRIVET_REPLY
+ 
 
 # Когда привет
 def msg_greetings(update, context):
@@ -70,7 +70,6 @@ conversation_handler = ConversationHandler(
     entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
 # для возврата функций непонятно куда 
     states = {
-        PRIVET_REPLY: [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
         LEKCII_REPLY: [MessageHandler(filters.Filters.regex('^(посмотреть лекцию)$'), msg_lekcii_reply)],
         DA_MEMY_REPLY: [MessageHandler(filters.Filters.regex('^(да|Нет)$'), msg_memy_reply)], 
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
