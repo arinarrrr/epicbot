@@ -36,7 +36,7 @@ def msg_greetings(update, context):
 
 # Ответы на вопрос: посмотреть лекцию 
 def msg_lekcii_reply(update, context):
-    if(update.effective_message.text == "посмотреть лекцию" or update.effective_message.text == "Посмотреть лекцию"):
+    if(update.effective_message.text == "посмотреть лекцию"):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?):
                                  
     return DA_MEMY_REPLY
@@ -69,7 +69,7 @@ conversation_handler = ConversationHandler(
     entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
 # для возврата функций непонятно куда 
     states = {
-        LEKCII_REPLY: [MessageHandler(filters.Filters.regex('^(посмотреть лекцию|Посмотреть лекцию)$'), msg_lekcii_reply)],
+        LEKCII_REPLY: [MessageHandler(filters.Filters.regex('^(посмотреть лекцию)$'), msg_lekcii_reply)],
         DA_MEMY_REPLY: [MessageHandler(filters.Filter.regex('^(Да|Нет)$'), msg_memy_reply)], 
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     },
