@@ -10,7 +10,7 @@ from time import sleep
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 
 ## Константы с номерами тем разговора
-LEKCII_REPLY, DA_MEMY_REPLY, ARAMZAS_REPLY = range(3)
+PRIVET_REPLY, LEKCII_REPLY, DA_MEMY_REPLY, ARAMZAS_REPLY = range(4)
 
 ## Всякая фигня
 updater = telegram.ext.Updater(token=BOT_TOKEN, use_context=True)
@@ -25,13 +25,14 @@ from telegram.ext import ConversationHandler
 
 def cmd_start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Привет, я культурный бот! Чем я могу тебе помочь? Чтобы начать напиши 'Привет'")
+    return PRIVET_REPLY
 
 # Когда привет
 def msg_greetings(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Привет!")
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Мы можем предложить тебе пару развлечений на вечер. Что ты хочешь, на сегодня мы можем предложить тебе следующее: посмотреть лекцию, послушать подкасть или выбрать ближайщее мероприятие. Чтобы ответить на этот вопрос просто напиши действие!")
-    context.bot.send_message(chat_id=update.effective_chat.id, text="У нашего бота есть несколько правил: Когда бот задает тебе вопрос отвечай 'да', либо 'нет' в зависимости от твоих желаний. Также, если ты передумал и не захотел ничего из предложенного, напиши вновь '/start'.")
-    
+    if(update.effective_message.text == "Привет"):
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Привет!")
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Мы можем предложить тебе пару развлечений на вечер. Что ты хочешь, на сегодня мы можем предложить тебе следующее: посмотреть лекцию, послушать подкасть или выбрать ближайщее мероприятие. Чтобы ответить на этот вопрос просто напиши действие!")
+        context.bot.send_message(chat_id=update.effective_chat.id, text="У нашего бота есть несколько правил: Когда бот задает тебе вопрос отвечай 'да', либо 'нет' в зависимости от твоих желаний. Также, если ты передумал и не захотел ничего из предложенного, напиши вновь '/start'.")
     return LEKCII_REPLY
 
 # Ответы на вопрос: посмотреть лекцию 
@@ -69,6 +70,7 @@ conversation_handler = ConversationHandler(
     entry_points = [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
 # для возврата функций непонятно куда 
     states = {
+        PRIVET_REPLY: [MessageHandler(filters.Filters.regex('^(Привет)$'), msg_greetings)],
         LEKCII_REPLY: [MessageHandler(filters.Filters.regex('^(посмотреть лекцию)$'), msg_lekcii_reply)],
         DA_MEMY_REPLY: [MessageHandler(filters.Filters.regex('^(да|Нет)$'), msg_memy_reply)], 
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
