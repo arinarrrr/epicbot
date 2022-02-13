@@ -37,7 +37,7 @@ def msg_greetings(update, context):
 # Ответы на вопрос: посмотреть лекцию 
 def msg_lekcii_reply(update, context):
     if(update.effective_message.text == "посмотреть лекцию"):
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?):
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Хочешь посмотреть лекцию про популярные философские мемы?)
                                  
     return DA_MEMY_REPLY
                                  
