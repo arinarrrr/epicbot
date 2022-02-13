@@ -70,7 +70,7 @@ conversation_handler = ConversationHandler(
 # для возврата функций непонятно куда 
     states = {
         LEKCII_REPLY: [MessageHandler(filters.Filters.regex('^(посмотреть лекцию)$'), msg_lekcii_reply)],
-        DA_MEMY_REPLY: [MessageHandler(filters.Filter.regex('^(Да|да|нет|Нет)$'), msg_memy_reply)], 
+        DA_MEMY_REPLY: [MessageHandler(filters.Filter.regex('^(Да|да|Нет)$'), msg_memy_reply)], 
         ARAMZAS_REPLY: [MessageHandler(filters.Filters.regex('^(Да|Нет)$'), msg_aramzas_reply)]
     },
 
